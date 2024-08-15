@@ -1,0 +1,27 @@
+body {
+    background-color: #212a31;
+}
+h1 {
+    color: #d3d9d4;
+    font-size: 300%;
+}
+h2 {
+    color: #d3d9d4;
+    font-size: 250%;
+}
+h3 {
+    color: #d3d9d4;
+    font-size: 200%;
+}
+p {
+    color: #d3d9d4;
+}
+form {
+    color: #d3d9d4;
+    background-color: #124e66;
+    padding: 3px;
+    text-align: center;
+    border: 8px solid #2e3944;
+    width: 200px;
+    margin: auto;
+}

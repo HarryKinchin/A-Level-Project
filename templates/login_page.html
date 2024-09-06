@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html>
    
-   <header>
-      test header
-   </header>
-   
    <head>
       <title>Revise Wizz</title>
       <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
@@ -12,6 +8,10 @@
       <script src="/static/js/login_funcs.js"> </script>
    </head>
    
+   <header>
+      test header
+   </header>
+
    <body>
       <h1 style="text-align: center;">Revise Wizz</h1>
       <h2 style="text-align: center;">Login or create an account</h2>
@@ -19,22 +19,26 @@
       <button type="button" id="create_acc" onclick="create_account()">Create an Account</button>
       <button type="button" id="login_acc" onclick="login_account()">Login</button>
 
-      <form id="login_form" method="post" style="display: none;">
+      <form id="login_form" method="post" style="display: none;" action="/static/js/login_funcs.js"
          <label for="uname">Username:</label><br>
          <input type="text" id="uname" name="uname" required><br>
          <label for="pword">Password:</label><br>
          <input type="password" id="pword" name="pword" required><br>
-         <input type="submit">
+         <a href="/templates/main_page.html">
+            <input type="submit">
+         </a>
       </form>
 
-      <form id="create_form" method="post" style="display: none;">
+      <form id="create_form" method="post" style="display: none;" action="/templates/main_page.html">
          <label for="new_uname">Username:</label><br>
          <input type="text" id="new_uname" required><br>
          <label for="new_pword">Password:</label><br>
          <input type="password" id="new_pword" required><br>
          <label for="pword_again">Type password again:</label><br>
          <input type="password" id="pword_again" required><br>
-         <input type="submit" onclick="password_check()">
+         <a href="/templates/main_page.html">
+            <input type="submit">
+         </a>
       </form>
    </body>
 

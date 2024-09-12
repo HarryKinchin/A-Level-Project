@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_from_directory
+from flask import Flask, render_template, request, send_from_directory, make_response
 app = Flask(__name__)
   
 @app.route('/login')       
@@ -10,4 +10,5 @@ def main():
     return render_template("main_page.html")
 
 if __name__=='__main__': 
-   app.run() 
+   app.run(debug=True)
+   

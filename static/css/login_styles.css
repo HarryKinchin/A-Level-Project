@@ -1,7 +1,9 @@
 header {
+    position: sticky;
+    top: 0;
+    padding: 10px 16px;
     background-color: #2e3944;
     color: #5a635b;
-    
 }
 body {
     background-color: #212a31;
@@ -26,6 +28,7 @@ form {
     border: 8px solid #2e3944;
     width: 200px;
     margin: auto;
+    border-radius: 20px;
 }
 button {
     display: block;
@@ -37,4 +40,29 @@ button {
     text-align: center;
     border: 8px solid #2e3944;
     width: 200px;
+    transition: 0.5s;
+    border-radius: 25px;
+}
+button:hover {
+    transform: scale(1.1) 
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+li {
+    float: left;
+} 
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+li a:hover {
+    background-color: #111;
 }

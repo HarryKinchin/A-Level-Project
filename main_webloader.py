@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_from_directory, make_response
+from flask import Flask, render_template, request, send_from_directory, make_response, redirect
 app = Flask(__name__)
 
 @app.route('/')
@@ -12,6 +12,14 @@ def login():
 @app.route('/account')
 def account():
     return render_template("account_page.html")
+
+@app.route('/turkey', methods=["POST"])
+def turkey():
+    print(request.form)
+    if request.form.get("uname") == "hello" and request.form.get("pword") == "no":
+        return redirect("/account")
+    else:
+        return render_template("failure.html")
 
 if __name__=='__main__': 
    app.run(debug=True)

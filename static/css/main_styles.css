@@ -7,6 +7,7 @@ header {
 }
 body {
     background-color: #212a31;
+    margin: 0px;
 }
 h1 {
     color: #d3d9d4;
@@ -29,20 +30,19 @@ ul {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: #2e3944;
 }
 li {
     float: left;
 } 
 li a {
-    display: block;
-    color: white;
+    color: #d3d9d4;
     text-align: center;
-    padding: 14px 16px;
+    padding: 12px 18px;
     text-decoration: none;
   }
 li a:hover {
-    background-color: #111;
+    background-color: #748d92;
 }
 div {
     background-color: #2e3944;

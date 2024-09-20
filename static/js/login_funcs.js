@@ -10,7 +10,3 @@ function create_account() {
     document.getElementById('login_acc').style.display='none'
     document.getElementById('create_form').style.display='block'
 }
-function password_check() {
-    var1 = document.getElementById('new_pword').getValue()
-    console.log(var1)
-}

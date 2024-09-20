@@ -13,8 +13,8 @@ def login():
 def account():
     return render_template("account_page.html")
 
-@app.route('/turkey', methods=["POST"])
-def turkey():
+@app.route('/login_check', methods=["POST"])
+def login_check():
     print(request.form)
     if request.form.get("uname") == "hello" and request.form.get("pword") == "no":
         return redirect("/account")

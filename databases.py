@@ -1,6 +1,4 @@
 import sqlite3
-from flask import current_app
-from flask import g
 
 class database_funcs:
     def __init__(self):
@@ -9,8 +7,19 @@ class database_funcs:
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS login_info(username TEXT PRIMARY KEY, password TEXT)""")
         self.connection.commit()
 
-    def login_find(self, user):
-        print(self.cursor.execute(f"""SELECT username, password FROM login_info WHERE username = ?""", (user,)))
-        
     def create_login(self, user, pword):
-        self.cursor.execute(f"""INSERT INTO login_info ?, ?""", (user, pword,))
+        temp = self.cursor.execute(f"""SELECT username, password FROM login_info WHERE username = ?""", (user,))
+        if temp.fetchone() is None:
+            self.cursor.execute(f"""INSERT INTO login_info VALUES(?, ?)""", (user, pword,))
+            self.connection.commit()
+            return True
+        else:
+            return False
+
+    def login_find(self, user):
+        temp = self.cursor.execute(f"""SELECT username, password FROM login_info WHERE username = ?""", (user,))
+        if temp.fetchone() is None:
+            return False
+        else:
+            return True
+        

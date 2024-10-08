@@ -24,21 +24,18 @@
       <button type="button" id="create_acc" onclick="create_account()">Create an Account</button>
       <button type="button" id="login_acc" onclick="login_account()">Login</button>
 
+      <form id="create_form" method="post" style="display: none;" action="/register">
+         <label for="new_uname">Username:</label><br>
+         <input type="text" id="new_uname" name="new_uname" required><br>
+         <label for="new_pword">Password:</label><br>
+         <input type="password" id="new_pword" name="new_pword" required><br>
+         <input type="submit">
+      </form>
       <form id="login_form" method="post" style="display: none;" action="/login_check">
          <label for="uname">Username:</label><br>
          <input type="text" id="uname" name="uname" required><br>
          <label for="pword">Password:</label><br>
          <input type="password" id="pword" name="pword" required><br>
-         <input type="submit">
-      </form>
-
-      <form id="create_form" method="post" style="display: none;">
-         <label for="new_uname">Username:</label><br>
-         <input type="text" id="new_uname" required><br>
-         <label for="new_pword">Password:</label><br>
-         <input type="password" id="new_pword" required><br>
-         <label for="pword_again">Type password again:</label><br>
-         <input type="password" id="pword_again" required><br>
          <input type="submit">
       </form>
    </body>

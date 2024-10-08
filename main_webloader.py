@@ -24,5 +24,14 @@ def login_check():
     else:
         return render_template("failure.html")
 
+@app.route('/register', methods=["POST"])
+def registering():
+    print(request.form)
+    database_oop = database_funcs()
+    if database_oop.create_login(request.form.get('new_uname'), request.form.get('new_pword')):
+        return redirect('/login')
+    else:
+        return render_template("failure.html")
+
 if __name__=='__main__': 
    app.run(debug=True)

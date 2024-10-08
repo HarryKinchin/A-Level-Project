@@ -8,6 +8,7 @@ header {
 body {
     background-color: #212a31;
     margin: 0px;
+    font-family: "Lucida Console", monospace !important;
 }
 h1 {
     color: #d3d9d4;

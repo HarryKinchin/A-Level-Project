@@ -62,5 +62,12 @@ li a:hover {
     background-color: #748d92;
 }
 div {
-    background-color: #2e3944;
+    color: #d3d9d4;
+    background-color: #124e66;
+    padding: 3px;
+    text-align: center;
+    border: 8px solid #2e3944;
+    width: 300px;
+    margin: auto;
+    border-radius: 20px;
 }

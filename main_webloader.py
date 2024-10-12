@@ -19,14 +19,13 @@ def account():
 def login_check():
     print(request.form)
     database_oop = database_funcs()
-    if database_oop.login_find(request.form.get('uname')):
+    if database_oop.login_find(request.form.get('uname'), request.form.get('pword')):
         return redirect("/account")
     else:
         return render_template("failure.html")
 
 @app.route('/register', methods=["POST"])
 def registering():
-    print(request.form)
     database_oop = database_funcs()
     if database_oop.create_login(request.form.get('new_uname'), request.form.get('new_pword')):
         return redirect('/login')

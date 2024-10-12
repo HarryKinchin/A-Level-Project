@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+    
     <head>
         <title>Home</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,12 +11,25 @@
     <header>
         <ul>
            <li><a href="/">Home</a></li>
+           <li><a href="/subjects">Subjects</a></li>
            <li style="float:right"><a href="/account">Account</a></li>
            <li style="float:right"><a href="/login">Login</a></li>
         </ul>
      </header>
 
     <body>
-        temp body
+        
+        <h1 style="text-align: center;">Revise Wizz</h1>
+        <h2 style="text-align: center;">Please choose an option below</h2>
+
+        <div>
+            <button onclick="document.location='login'">Login</button>
+            <button onclick="document.location='account'">Account</button>
+        </div>
+        <div>
+            <button onclick="document.location='subjects'">Subjects</button>
+            <button onclick="document.location=''">Option 4...</button>
+        </div>
     </body>
+
 </html>

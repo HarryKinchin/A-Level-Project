@@ -12,6 +12,7 @@
    <header>
       <ul>
          <li><a href="/">Home</a></li>
+         <li><a href="/subjects">Subjects</a></li>
          <li style="float:right"><a href="/account">Account</a></li>
          <li style="float:right"><a href="/login">Login</a></li>
       </ul>
@@ -19,7 +20,7 @@
 
    <body>
       <h1 style="text-align: center;">Revise Wizz</h1>
-      <h2 style="text-align: center;">Login or create an account</h2>
+      <h2 id="choice_text" style="text-align: center;">Login or create an account</h2>
 
       <button type="button" id="create_acc" onclick="create_account()">Create an Account</button>
       <button type="button" id="login_acc" onclick="login_account()">Login</button>
@@ -31,6 +32,13 @@
          <input type="password" id="new_pword" name="new_pword" required><br>
          <input type="submit">
       </form>
+      <div id="create_check" class="password_check" style="display: none;">
+         <div class="length_check">☒ At least 8 characters long</div><br>
+         <div class="upper_check">☒ At least 1 uppercase letter</div><br>
+         <div class="lower_check">☒ At least 1 lowercase letter</div><br>
+         <div class="num_check">☒ At least 1 number</div><br>
+         <div class="spec_check">☒ At least 1 special character</div><br>
+      </div>
       <form id="login_form" method="post" style="display: none;" action="/login_check">
          <label for="uname">Username:</label><br>
          <input type="text" id="uname" name="uname" required><br>

@@ -28,7 +28,7 @@ form {
     padding: 3px;
     text-align: center;
     border: 8px solid #2e3944;
-    width: 200px;
+    width: 300px;
     margin: auto;
     border-radius: 20px;
 }
@@ -66,4 +66,14 @@ li a {
   }
 li a:hover {
     background-color: #748d92;
+}
+.password_check div {
+    color: red;
+    background-color: #124e66;
+    padding: 10px;
+    align-items: center;
+    border: 8px solid #2e3944;
+    width: 300px;
+    margin: auto;
+    border-radius: 20px;
 }

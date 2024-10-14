@@ -67,13 +67,28 @@ li a {
 li a:hover {
     background-color: #748d92;
 }
-.password_check div {
+div {
+    color: #d3d9d4;
+    background-color: #124e66;
+    margin: auto;
+    width: 350px;
+    padding: 3px;
+    border: 8px solid #2e3944;
+    border-radius: 20px;
+}
+label.invalid {
     color: red;
     background-color: #124e66;
-    padding: 10px;
+    padding: 3px;
     align-items: center;
-    border: 8px solid #2e3944;
-    width: 300px;
-    margin: auto;
     border-radius: 20px;
+    margin: auto;
+}
+label.valid {
+    color: yellowgreen;
+    background-color: #124e66;
+    padding: 3px;
+    align-items: center;
+    border-radius: 20px;
+    margin: auto;
 }

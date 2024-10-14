@@ -6,7 +6,6 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
       <link rel="stylesheet" type="text/css" href="/static/css/login_styles.css">
-      <script src="/static/js/login_funcs.js"> </script>
    </head>
    
    <header>
@@ -24,31 +23,34 @@
 
       <button type="button" id="create_acc" onclick="create_account()">Create an Account</button>
       <button type="button" id="login_acc" onclick="login_account()">Login</button>
-
-      <form id="create_form" method="post" style="display: none;" action="/register">
-         <label for="new_uname">Username:</label><br>
-         <input type="text" id="new_uname" name="new_uname" required><br>
-         <label for="new_pword">Password:</label><br>
-         <input type="password" id="new_pword" name="new_pword" required><br>
-         <input type="submit">
-      </form>
-      <div id="create_check" class="password_check" style="display: none;">
-         <div class="length_check">☒ At least 8 characters long</div><br>
-         <div class="upper_check">☒ At least 1 uppercase letter</div><br>
-         <div class="lower_check">☒ At least 1 lowercase letter</div><br>
-         <div class="num_check">☒ At least 1 number</div><br>
-         <div class="spec_check">☒ At least 1 special character</div><br>
+      
+      <div id="create_form"  style="display: none;">
+         <form method="post" action="/register">
+            <label for="new_uname">Username:</label><br>
+            <input type="text" id="new_uname" name="new_uname" placeholder="Username..." required><br>
+            <label for="new_pword">Password:</label><br>
+            <input type="password" id="new_pword" name="new_pword" placeholder="Password..." required><br>
+            <input type="submit">
+         </form>
+         <label class="invalid" id="len_check">At least 8 characters long</label><br>
+         <label class="invalid" id="upper_check">At least 1 uppercase letter</label><br>
+         <label class="invalid" id="lower_check">At least 1 lowercase letter</label><br>
+         <label class="invalid" id="num_check">At least 1 number</label><br>
+         <label class="invalid" id="spec_check">At least 1 special character</label><br>
       </div>
+
       <form id="login_form" method="post" style="display: none;" action="/login_check">
          <label for="uname">Username:</label><br>
-         <input type="text" id="uname" name="uname" required><br>
+         <input type="text" id="uname" name="uname" placeholder="Username..." required><br>
          <label for="pword">Password:</label><br>
-         <input type="password" id="pword" name="pword" required><br>
+         <input type="password" id="pword" name="pword" placeholder="Password..." required><br>
          <input type="submit">
       </form>
    </body>
 
+
    <footer>
+      <script src="/static/js/login_funcs.js"> </script>
    </footer>
 
 </html>

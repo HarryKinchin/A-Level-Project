@@ -1,6 +1,6 @@
 import sqlite3
 
-class database_funcs:
+class logins_table:
     def __init__(self):
         self.connection = sqlite3.connect("storage.db")
         self.cursor = self.connection.cursor()
@@ -24,3 +24,9 @@ class database_funcs:
         else:
             return True
         
+class subjects_table:
+    def __init__(self):
+        self.connection = sqlite3.connect("storage.db")
+        self.cursor = self.connection.cursor()
+        self.cursor.execute("""CREATE TABLE IF NOT EXISTS subjects_library(username TEXT PRIMARY KEY, password TEXT)""")
+        self.connection.commit()

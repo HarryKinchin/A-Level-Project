@@ -11,8 +11,8 @@ def main():
 def login(): 
     return render_template('login_page.html')
 
-@app.route('/account')
-def account():
+@app.route('/account/<username>')
+def account(username):
     return render_template('account_page.html')
 
 @app.route('/login_check', methods=['POST'])
@@ -20,7 +20,10 @@ def login_check():
     print(request.form)
     login_oop = logins_table()
     if login_oop.login_find(request.form.get('uname'), request.form.get('pword')):
-        return redirect('/account')
+        username = request.form.get('uname')
+        resp = account(username)
+        resp.set_cookie('username', username)
+        return resp
     else:
         return render_template('failure.html')
 

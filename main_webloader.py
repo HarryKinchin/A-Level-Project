@@ -17,20 +17,17 @@ def account(username):
 
 @app.route('/login_check', methods=['POST'])
 def login_check():
-    print(request.form)
     login_oop = logins_table()
-    if login_oop.login_find(request.form.get('uname'), request.form.get('pword')):
+    if login_oop.login_find(request.form.get('uname'), request.form.get('pword'), request.form.get('email')):
         username = request.form.get('uname')
-        resp = account(username)
-        resp.set_cookie('username', username)
-        return resp
+        return redirect(f'/account/{username}')
     else:
         return render_template('failure.html')
 
 @app.route('/register', methods=['POST'])
 def registering():
     login_oop = logins_table()
-    if login_oop.create_login(request.form.get('new_uname'), request.form.get('new_pword')):
+    if login_oop.create_login(request.form.get('new_uname'), request.form.get('new_pword'), request.form.get('email')):
         return redirect('/login')
     else:
         return render_template('failure.html')

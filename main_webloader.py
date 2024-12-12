@@ -12,12 +12,12 @@ def login():
     return render_template('login_page.html')
 
 @app.route('/account/<username>')
-def account(username):
+def account():
     return render_template('account_page.html')
 
 @app.route('/login_check', methods=['POST'])
 def login_check():
-    login_oop = logins_table()
+    login_oop = users_table()
     if login_oop.login_find(request.form.get('uname'), request.form.get('pword'), request.form.get('email')):
         username = request.form.get('uname')
         return redirect(f'/account/{username}')
@@ -26,7 +26,7 @@ def login_check():
 
 @app.route('/register', methods=['POST'])
 def registering():
-    login_oop = logins_table()
+    login_oop = users_table()
     if login_oop.create_login(request.form.get('new_uname'), request.form.get('new_pword'), request.form.get('email')):
         return redirect('/login')
     else:

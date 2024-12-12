@@ -30,44 +30,65 @@ var special_characters = /[-’/`~!#*$@_%+=.,^&(){}[\]|;:”<>?\\]/g
 
 // starts checking the user's inputs
 pword_input.onkeyup = function() {
+    var length_bool = false;
+    var lower_bool = false;
+    var upper_bool = false;
+    var num_bool = false;
+    var spec_bool = false;
+    document.getElementById("reg_submit").disabled = true;
     // length validation
     if(pword_input.value.length >= 8) {
         pword_length.classList.remove('invalid');
         pword_length.classList.add('valid');
+        length_bool == true;
     } else {
         pword_length.classList.remove('valid');
         pword_length.classList.add('invalid');
+        length_bool == false;
     }
     // lowercase validation
     if(pword_input.value.match(lower_case_letters)) {
-        pword_lower.classList.remove('invalid')
-        pword_lower.classList.add('valid')
+        pword_lower.classList.remove('invalid');
+        pword_lower.classList.add('valid');
+        lower_bool == true;
     } else {
-        pword_lower.classList.remove('valid')
-        pword_lower.classList.add('invalid')
+        pword_lower.classList.remove('valid');
+        pword_lower.classList.add('invalid');
+        lower_bool == false;
     }
     // uppercase validation
     if(pword_input.value.match(upper_case_letters)) {
         pword_upper.classList.remove('invalid');
         pword_upper.classList.add('valid');
+        upper_bool == true;
     } else {
         pword_upper.classList.remove('valid');
         pword_upper.classList.add('invalid');
+        upper_bool == false;
     }
     // number validation
     if(pword_input.value.match(numbers)) {
         pword_number.classList.remove('invalid');
         pword_number.classList.add('valid');
+        num_bool == true;
     } else {
         pword_number.classList.remove('valid');
         pword_number.classList.add('invalid');
+        num_bool == false;
     }
     // special character validation
     if(pword_input.value.match(special_characters)) {
-        pword_special.classList.remove('invalid')
-        pword_special.classList.add('valid')
+        pword_special.classList.remove('invalid');
+        pword_special.classList.add('valid');
+        spec_bool == true;
     } else {
-        pword_special.classList.remove('valid')
-        pword_special.classList.add('invalid')
+        pword_special.classList.remove('valid');
+        pword_special.classList.add('invalid');
+        spec_bool == false;
     }
-}
+    if(length_bool == true && lower_bool == true && upper_bool == true && num_bool == true && spec_bool == true) {
+        document.getElementById("reg_submit").disabled = false;
+    } else {
+        document.getElementById("reg_submit").disabled = true;
+    }
+    }

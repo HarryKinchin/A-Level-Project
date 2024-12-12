@@ -1,7 +1,7 @@
 import sqlite3
 from argon2 import PasswordHasher
 
-class logins_table:
+class users_table:
     def __init__(self):
         self.connection = sqlite3.connect("storage.db")
         self.connection.execute("PRAGMA foreign_keys = 1")
@@ -25,7 +25,6 @@ class logins_table:
             return False
 
     def login_find(self, user, pword, email):
-        print(user, pword, email)
         uname_check = self.cursor.execute("""SELECT username FROM users WHERE username = ?""", (user,))
         uname_check = uname_check.fetchone()
         email_check = self.cursor.execute("""SELECT email FROM users WHERE email =?""", (email,))
@@ -49,7 +48,7 @@ class subjects_table:
                             subjectName TEXT)""")
         self.connection.commit()
 
-class subuser_table:
+class subject_user_table:
     def __init__(self):
         self.connection = sqlite3.connect("storage.db")
         self.connection.execute("PRAGMA foreign_keys = 1")
@@ -59,7 +58,7 @@ class subuser_table:
                             userID INTEGER, 
                             subjectID INTEGER,
                             FOREIGN KEY (userID) REFERENCES users (userID),
-                            FOREIGN KEY (subjectID) REFERENCES subjects (subjectID)))""")
+                            FOREIGN KEY (subjectID) REFERENCES subjects (subjectID))""")
         self.connection.commit()
 
 class questions_table:
@@ -73,6 +72,7 @@ class questions_table:
                             topicID INTEGER,
                             question TEXT,
                             answer TEXT,
+                            question_type TEXT,
                             FOREIGN KEY (subjectID) REFERENCES subjects (subjectID),
                             FOREIGN KEY (topicID) REFERENCES topics (topicID))""")
         self.connection.commit()
@@ -89,3 +89,15 @@ class topic_table:
                             FOREIGN KEY (subjectID) REFERENCES subjects (subjectID))""")
         self.connection.commit()
 
+class user_progress_table:
+    def __init__(self):
+        self.connection = sqlite3.connect("storage.db")
+        self.connection.execute("PRAGMA foreign_keys = 1")
+        self.cursor = self.connection.cursor()
+        self.cursor.execute("""CREATE TABLE IF NOT EXISTS user_progress
+                            (topicID INTEGER,
+                            userID INTEGER,
+                            progress INTEGER,
+                            FOREIGN KEY (topicID) REFERENCES topics (topicID)
+                            FOREIGN KEY (userID) REFERENCES users (userID))""")
+        self.connection.commit()

@@ -1,0 +1,56 @@
+// Code to setup the database without using the classes in /databases.py 
+
+// package import and database connection
+import sqlite3
+connection = sqlite3.connect("storage.db")
+connection.execute("PRAGMA foreign_keys = 1")
+cursor = connection.cursor()
+
+// users table
+cursor.execute("""CREATE TABLE IF NOT EXISTS users
+                (userID INTEGER PRIMARY KEY AUTOINCREMENT, 
+                username TEXT, 
+                password TEXT, 
+                email TEXT)""")
+
+// subjects table
+cursor.execute("""CREATE TABLE IF NOT EXISTS subjects
+                (subjectID INTEGER PRIMARY KEY AUTOINCREMENT, 
+                subjectName TEXT)""")
+
+// subject_users table
+cursor.execute("""CREATE TABLE IF NOT EXISTS usersubjects
+                (userSubjectID INTEGER PRIMARY KEY AUTOINCREMENT, 
+                userID INTEGER, 
+                subjectID INTEGER,
+                FOREIGN KEY (userID) REFERENCES users (userID),
+                FOREIGN KEY (subjectID) REFERENCES subjects (subjectID))""")
+
+// questions table
+cursor.execute("""CREATE TABLE IF NOT EXISTS questions
+                (questionID INTEGER PRIMARY KEY AUTOINCREMENT,
+                subjectID INTEGER,
+                topicID INTEGER,
+                question TEXT,
+                answer TEXT,
+                question_type TEXT,
+                FOREIGN KEY (subjectID) REFERENCES subjects (subjectID),
+                FOREIGN KEY (topicID) REFERENCES topics (topicID))""")
+
+// topics table
+cursor.execute("""CREATE TABLE IF NOT EXISTS topics
+                (topicID INTEGER PRIMARY KEY AUTOINCREMENT,
+                subjectID INTEGER,
+                topicName TEXT,
+                FOREIGN KEY (subjectID) REFERENCES subjects (subjectID))""")
+
+// user_progress table
+cursor.execute("""CREATE TABLE IF NOT EXISTS user_progress
+                (topicID INTEGER,
+                userID INTEGER,
+                progress INTEGER,
+                FOREIGN KEY (topicID) REFERENCES topics (topicID)
+                FOREIGN KEY (userID) REFERENCES users (userID))""")
+
+// commit changes
+connection.commit()

@@ -27,7 +27,7 @@ def login_check():
 @app.route('/register', methods=['POST'])
 def registering():
     login_oop = users_table()
-    if login_oop.create_login(request.form.get('new_uname'), request.form.get('new_pword'), request.form.get('email')):
+    if login_oop.create_login(request.form.get('new_uname'), request.form.get('new_pword'), request.form.get('new_email')):
         return redirect('/login')
     else:
         return render_template('failure.html')

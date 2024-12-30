@@ -86,6 +86,7 @@ class topic_table:
                             (topicID INTEGER PRIMARY KEY AUTOINCREMENT,
                             subjectID INTEGER,
                             topicName TEXT,
+                            qualification TEXT,
                             FOREIGN KEY (subjectID) REFERENCES subjects (subjectID))""")
         self.connection.commit()
 

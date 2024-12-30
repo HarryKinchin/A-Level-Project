@@ -13,11 +13,36 @@
            <li><a href="/">Home</a></li>
            <li><a href="/subjects">Subjects</a></li>
            <li style="float:right"><a href="/account">Account</a></li>
-           <li style="float:right"><a href="/login">Login</a></li>
+           <li style="float:right"><a href="/logout">Logout</a></li>
         </ul>
      </header>
 
      <body>
+      <h1 style="text-align: center;">{{name}}'s Account</h1>
+      <div>
+         <table>
+            <tr>
+               <th style="text-align: left;">Account Details</th>
+               <th style="text-align: right;">Subjects</th>
+            </tr>
+            <tr>
+               <td style="text-align: left;">Username: {{name}}</td>
+               <td>
+                  <form>
+                     <input type="checkbox" value="maths">
+                     <label>Maths</label>
+                  </form>
+               </td>
+            </tr>
+            <tr>
+               <td style="text-align: left;">Email: {{email}}</td>
+               <td style="text-align: right;">
+                  <input type="checkbox" value="compsci">
+                  <label>Computer Science</label>
+               </td>
+            </tr>
+         </table>
+      </div>
      </body>
 
      <footer>

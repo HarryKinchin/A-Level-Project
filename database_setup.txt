@@ -16,7 +16,8 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS users
 // subjects table
 cursor.execute("""CREATE TABLE IF NOT EXISTS subjects
                 (subjectID INTEGER PRIMARY KEY AUTOINCREMENT, 
-                subjectName TEXT)""")
+                subjectName TEXT,
+                examBoard TEXT)""")
 
 // subject_users table
 cursor.execute("""CREATE TABLE IF NOT EXISTS usersubjects
@@ -42,6 +43,7 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS topics
                 (topicID INTEGER PRIMARY KEY AUTOINCREMENT,
                 subjectID INTEGER,
                 topicName TEXT,
+                qualification TEXT,
                 FOREIGN KEY (subjectID) REFERENCES subjects (subjectID))""")
 
 // user_progress table

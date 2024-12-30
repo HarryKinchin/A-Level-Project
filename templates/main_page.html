@@ -12,24 +12,27 @@
         <ul>
            <li><a href="/">Home</a></li>
            <li><a href="/subjects">Subjects</a></li>
-           <li style="float:right"><a href="/account/<username>">Account</a></li>
-           <li style="float:right"><a href="/login">Login</a></li>
+           <li style="float:right"><a href="/account">Account</a></li>
+           <li style="float:right"><a href="/logout">Logout</a></li>
         </ul>
      </header>
 
     <body>
         
-        <h1 style="text-align: center;">Revise Wizz</h1>
-        <h2 style="text-align: center;">Please choose an option below</h2>
+        <h1 style="text-align: center;">Welcome {{name}} to Revise Wizz</h1>
+        <h2 style="text-align: center;">Please select an option below</h2>
 
         <div>
-            <button onclick="document.location='login'">Login</button>
             <button onclick="document.location='account'">Account</button>
+            <button onclick="document.location='subjects'">Subjects</button>
         </div>
         <div>
-            <button onclick="document.location='subjects'">Subjects</button>
-            <button onclick="document.location=''">Option 4...</button>
+            <button onclick="document.location=''">Option 3...</button>
+            <button onclick="document.location='logout'">logout</button>
         </div>
     </body>
 
+    <footer>
+    </footer>
+    
 </html>

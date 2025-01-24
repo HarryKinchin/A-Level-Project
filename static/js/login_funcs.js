@@ -43,7 +43,7 @@ pword_input.onkeyup = function() {
     var num_bool = false;
     var spec_bool = false;
     // length validation
-    if(pword_input.value.length >= 8) {
+    if (pword_input.value.length >= 8) {
         pword_length.classList.remove('invalid');
         pword_length.classList.add('valid');
         length_bool = true;
@@ -53,7 +53,7 @@ pword_input.onkeyup = function() {
         length_bool = false;
     }
     // lowercase validation
-    if(pword_input.value.match(lower_case_letters)) {
+    if (pword_input.value.match(lower_case_letters)) {
         pword_lower.classList.remove('invalid');
         pword_lower.classList.add('valid');
         lower_bool = true;
@@ -63,7 +63,7 @@ pword_input.onkeyup = function() {
         lower_bool = false;
     }
     // uppercase validation
-    if(pword_input.value.match(upper_case_letters)) {
+    if (pword_input.value.match(upper_case_letters)) {
         pword_upper.classList.remove('invalid');
         pword_upper.classList.add('valid');
         upper_bool = true;
@@ -73,7 +73,7 @@ pword_input.onkeyup = function() {
         upper_bool = false;
     }
     // number validation
-    if(pword_input.value.match(numbers)) {
+    if (pword_input.value.match(numbers)) {
         pword_number.classList.remove('invalid');
         pword_number.classList.add('valid');
         num_bool = true;
@@ -83,7 +83,7 @@ pword_input.onkeyup = function() {
         num_bool = false;
     }
     // special character validation
-    if(pword_input.value.match(special_characters)) {
+    if (pword_input.value.match(special_characters)) {
         pword_special.classList.remove('invalid');
         pword_special.classList.add('valid');
         spec_bool = true;
@@ -92,7 +92,7 @@ pword_input.onkeyup = function() {
         pword_special.classList.add('invalid');
         spec_bool = false;
     }
-    if(length_bool == true && lower_bool == true && upper_bool == true && num_bool == true && spec_bool == true) {
+    if (length_bool == true && lower_bool == true && upper_bool == true && num_bool == true && spec_bool == true) {
         pword_valid = true;
     } else {
         pword_valid = false;
@@ -106,7 +106,7 @@ var email_regex = /[-!"£$%^&*(){}[\]#~'@;:?.>,<A-Za-z0-9]+[@][-!"£$%^&*(){}[\]
 
 // Function for making sure email is in a valid format: "abc@def.ghi"
 email_input.onkeyup = function() {
-    if(email_input.value.match(email_regex)) {
+    if (email_input.value.match(email_regex)) {
         email_valid = true;
     } else {
         email_valid = false;
@@ -116,7 +116,7 @@ email_input.onkeyup = function() {
 
 // function to check for a valid email and password before submition
 function both_valid() {
-    if(pword_valid == true && email_valid == true) {
+    if (pword_valid == true && email_valid == true) {
         document.getElementById("reg_submit").disabled = false;
     } else {
         document.getElementById("reg_submit").disabled = true;

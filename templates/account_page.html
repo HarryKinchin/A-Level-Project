@@ -5,7 +5,7 @@
         <title>Account</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
-        <link rel="stylesheet" type="text/css" href="/static/css/main_styles.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/stylings.css">
      </head>
 
      <header>
@@ -19,33 +19,37 @@
 
      <body>
       <h1 style="text-align: center;">{{name}}'s Account</h1>
-      <div>
+      <div id="account_info">
          <table>
             <tr>
-               <th style="text-align: left;">Account Details</th>
-               <th style="text-align: right;">Subjects</th>
+               <th style="text-align: left;">Account Details:</th>
+               <th style="text-align: right;">Subjects:</th>
             </tr>
             <tr>
                <td style="text-align: left;">Username: {{name}}</td>
                <td>
-                  <form>
-                     <input type="checkbox" value="maths">
-                     <label>Maths</label>
-                  </form>
+                  <label id="maths_sub">{{maths}}</label>
                </td>
             </tr>
             <tr>
                <td style="text-align: left;">Email: {{email}}</td>
                <td style="text-align: right;">
-                  <input type="checkbox" value="compsci">
-                  <label>Computer Science</label>
+                  <label id="comp_sub">{{compsci}}</label>
                </td>
             </tr>
          </table>
+
       </div>
+      <button id="sub_edit" onclick="edit_subjects()">Edit subjects</button>
+      <form id="edit_form" action="/account/subject_change" style="display: none;">
+         <input type="checkbox" id="maths_check">Mathematics<br>
+         <input type="checkbox" id="comp_sub">Computer Science<br>
+         <input type="submit"></form>
+      </form>
      </body>
 
      <footer>
+      <script src="/static/js/account_funcs.js"> </script>
      </footer>
 
 </html>

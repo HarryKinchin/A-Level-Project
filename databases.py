@@ -37,7 +37,14 @@ class users_table:
                 return True
             else:
                 return False
-        
+
+    def userID_get(self, user, pword, email):
+        hashed_pword = self.ph.verify(self.cursor.execute("""SELECT password FROM users WHERE username = ?""", (user,)).fetchone()[0], pword)
+        if hashed_pword:
+            id_found = self.cursor.execute(f"""SELECT userID FROM users WHERE username = '{user}' AND email = '{email}'""")
+            id = id_found.fetchone()[0]
+        return id
+    
 class subjects_table:
     def __init__(self):
         self.connection = sqlite3.connect("storage.db")
@@ -48,19 +55,41 @@ class subjects_table:
                             subjectName TEXT)""")
         self.connection.commit()
 
+    def subID_to_sub(self, subject_id):
+        subjects = []
+        for item in subject_id:
+            self.cursor.execute(f"""SELECT subjectName FROM subjects WHERE subjectID = '{item}'""")
+            subjects.append(self.cursor.fetchall()[0])
+        print('subjects from func', subjects)
+        return subjects
+        
 class subject_user_table:
     def __init__(self):
         self.connection = sqlite3.connect("storage.db")
         self.connection.execute("PRAGMA foreign_keys = 1")
+        self.connection.row_factory = lambda cursor, row: row[0]
         self.cursor = self.connection.cursor()
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS usersubjects
-                            (userSubjectID INTEGER PRIMARY KEY AUTOINCREMENT, 
-                            userID INTEGER, 
+                            (userID INTEGER, 
                             subjectID INTEGER,
                             FOREIGN KEY (userID) REFERENCES users (userID),
                             FOREIGN KEY (subjectID) REFERENCES subjects (subjectID))""")
         self.connection.commit()
 
+    def subID_get(self, userID):
+        self.cursor.execute(f"""SELECT subjectID FROM usersubjects WHERE userID = '{userID}'""")
+        sub_id = self.cursor.fetchall()
+        print('sub_id',sub_id)
+        if sub_id == []:
+            return ''
+        else:
+            return subjects_table.subID_to_sub(self, sub_id)
+
+    def subject_change(self, userID):
+        current_subjects = self.subID_get(userID)
+        print('current subjects',current_subjects)
+        
+            
 class questions_table:
     def __init__(self):
         self.connection = sqlite3.connect("storage.db")

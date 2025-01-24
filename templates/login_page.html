@@ -5,7 +5,7 @@
       <title>Login</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
-      <link rel="stylesheet" type="text/css" href="/static/css/login_styles.css">
+      <link rel="stylesheet" type="text/css" href="/static/css/stylings.css">
    </head>
    
    <header>
@@ -24,8 +24,8 @@
       <button type="button" id="create_acc" onclick="create_account()">Create an Account</button>
       <button type="button" id="login_acc" onclick="login_account()">Login</button>
       
-      <div id="create_form"  style="display: none;">
-         <form method="post" action="/register">
+      <div id="create_form"  style="display: none;" >
+         <form method="post" action="/register" class="register">
             <label for="new_uname">Username:</label><br>
             <input type="text" id="new_uname" name="new_uname" placeholder="Username..." required><br>
             <label for="new_pword">Password:</label><br>

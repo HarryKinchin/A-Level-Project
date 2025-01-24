@@ -22,9 +22,26 @@ h3 {
     color: #d3d9d4;
     font-size: 200%;
 }
-footer {
-    background-color: #2e3944;
+form {
     color: #d3d9d4;
+    background-color: #124e66;
+    padding: 3px;
+    text-align: center;
+    border: 8px solid #2e3944;
+    width: 300px;
+    margin: auto;
+    border-radius: 20px;
+}
+form.register {
+    color: #d3d9d4;
+    text-align: center;
+    width: 300px;
+    margin: auto;
+}
+form.account_form {
+    color: #d3d9d4;
+    text-align: center;
+    width: 300px;
 }
 button {
     display: block;
@@ -61,6 +78,47 @@ li a {
 li a:hover {
     background-color: #748d92;
 }
+label.invalid {
+    color: red;
+    background-color: #124e66;
+    padding: 3px;
+    align-items: center;
+    border-radius: 20px;
+    margin: auto;
+}
+label.valid {
+    color: yellowgreen;
+    background-color: #124e66;
+    padding: 3px;
+    align-items: center;
+    border-radius: 20px;
+    margin: auto;
+}
+header {
+    position: sticky;
+    top: 0;
+    padding: 10px 16px;
+    background-color: #2e3944;
+    color: #5a635b;
+}
+body {
+    background-color: #212a31;
+    margin: 0px;
+    font-family: "Lucida Console", monospace !important;
+}
+h1 {
+    color: #d3d9d4;
+    font-size: 300%;
+}
+h2 {
+    color: #d3d9d4;
+    font-size: 250%;
+}
+h3 {
+    color: #d3d9d4;
+    font-size: 200%;
+}
+
 div {
     color: #d3d9d4;
     background-color: #124e66;

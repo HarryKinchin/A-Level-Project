@@ -41,10 +41,10 @@
 
       </div>
       <button id="sub_edit" onclick="edit_subjects()">Edit subjects</button>
-      <form id="edit_form" action="/account/subject_change" style="display: none;">
-         <input type="checkbox" id="maths_check">Mathematics<br>
-         <input type="checkbox" id="comp_sub">Computer Science<br>
-         <input type="submit"></form>
+      <form id="edit_form" method="post" action="/account/subject_change" style="display: none;">
+         <input type="checkbox" name="maths_check" id="maths_check">Mathematics<br>
+         <input type="checkbox" name="comp_check" id="comp_check">Computer Science<br>
+         <input type="submit">
       </form>
      </body>
 

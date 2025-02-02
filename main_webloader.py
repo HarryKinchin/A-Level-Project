@@ -22,18 +22,14 @@ def login():
 
 @app.route('/logout')
 def logout():
-    if 'username' in session:
-        session.pop('username')
-        return redirect('/login')
-    else:
-       return redirect('/login')
+    return redirect('/login')
 
 @app.route('/account')
 def account():
     if 'username' in session:
         username, email, userID = session['username'], session['email'], session['userID']
-        subjects_oop = subject_user_table()
-        subjects = subjects_oop.subID_get(userID)
+        subjects_oop = SubjectUserTable()
+        subjects = subjects_oop.subIDs_get_from_userID(userID)
         if len(subjects) == 2:
             sub1 = 'Mathematics'
             sub2 = 'Computer Science'
@@ -53,14 +49,23 @@ def account():
     
 @app.route('/account/subject_change', methods=['POST','GET'])
 def subject_change():
-    subchange_oop = subject_user_table()
     userID = session['userID']
-    subchange_oop.subject_change(userID)
+    subchange_oop = SubjectUserTable()
+    subjects_selected = []
+    if request.form.get('maths_check'):
+        subjects_selected.append('1,true')
+    else:
+        subjects_selected.append('1,false')
+    if request.form.get('comp_check'):
+        subjects_selected.append('2,true')
+    else:
+        subjects_selected.append('2,false')
+    subchange_oop.subject_change(userID, subjects_selected)
     return redirect('/account')
 
 @app.route('/login_check', methods=['POST'])
 def login_check():
-    login_oop = users_table()
+    login_oop = UsersTable()
     if login_oop.login_find(request.form.get('uname'), request.form.get('pword'), request.form.get('email')):
         session['username'], session['email'] = request.form.get('uname'), request.form.get('email')
         session['userID'] = login_oop.userID_get(request.form.get('uname'), request.form.get('pword'), request.form.get('email'))
@@ -70,7 +75,7 @@ def login_check():
 
 @app.route('/register', methods=['POST','GET'])
 def registering():
-    login_oop = users_table()
+    login_oop = UsersTable()
     if login_oop.create_login(request.form.get('new_uname'), request.form.get('new_pword'), request.form.get('new_email')):
         return redirect('/login')
     else:

@@ -8,9 +8,9 @@ class UsersTable:
         self.cursor = self.connection.cursor()
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS users
                             (userID INTEGER PRIMARY KEY AUTOINCREMENT, 
-                            username TEXT, 
-                            password TEXT, 
-                            email TEXT)""")
+                            username TEXT NOT NULL, 
+                            password TEXT NOT NULL, 
+                            email TEXT NOT NULL)""")
         self.connection.commit()
         self.ph = PasswordHasher()
 
@@ -52,14 +52,14 @@ class SubjectsTable:
         self.cursor = self.connection.cursor()
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS subjects
                             (subjectID INTEGER PRIMARY KEY AUTOINCREMENT, 
-                            subjectName TEXT)""")
+                            subjectName TEXT NOT NULL)""")
         self.connection.commit()
 
     def subIDs_to_sub(self, subject_ids):
         subjects = []
         for item in subject_ids:
             self.cursor.execute(f"""SELECT subjectName FROM subjects WHERE subjectID = ?""", (item,))
-            subjects.append(self.cursor.fetchall()[0])
+            subjects.append(self.cursor.fetchone()[0])
         return subjects
     
     def subs_to_subID(self, subjects):
@@ -91,7 +91,6 @@ class SubjectUserTable:
             return SubjectsTable().subIDs_to_sub(sub_id)
 
     def subject_change(self, userID, changing_subjectIDs):
-        current_subjects = self.subIDs_get_from_userID(userID)
         for item in changing_subjectIDs:
             sub_change = item.split(',')
             self.cursor.execute(f"""SELECT subjectID FROM usersubjects WHERE subjectID={sub_change[0]}""")
@@ -101,22 +100,6 @@ class SubjectUserTable:
             elif sub_change[1] == 'false' and sub_found == [int(sub_change[0])]:    #remove from table
                 self.cursor.execute("""DELETE FROM usersubjects WHERE subjectID=? AND userId=?""", (sub_found[0], userID,))                                                                  #do nothing
             self.connection.commit()
-            
-class QuestionsTable:
-    def __init__(self):
-        self.connection = sqlite3.connect("storage.db")
-        self.connection.execute("PRAGMA foreign_keys = 1")
-        self.cursor = self.connection.cursor()
-        self.cursor.execute("""CREATE TABLE IF NOT EXISTS questions
-                            (questionID INTEGER PRIMARY KEY AUTOINCREMENT,
-                            subjectID INTEGER,
-                            topicID INTEGER,
-                            question TEXT,
-                            answer TEXT,
-                            question_type TEXT,
-                            FOREIGN KEY (subjectID) REFERENCES subjects (subjectID),
-                            FOREIGN KEY (topicID) REFERENCES topics (topicID))""")
-        self.connection.commit()
 
 class TopicsTable:
     def __init__(self):
@@ -126,10 +109,29 @@ class TopicsTable:
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS topics
                             (topicID INTEGER PRIMARY KEY AUTOINCREMENT,
                             subjectID INTEGER,
-                            topicName TEXT,
-                            qualification TEXT,
+                            topicName TEXT NOT NULL,
+                            qualification TEXT NOT NULL,
                             FOREIGN KEY (subjectID) REFERENCES subjects (subjectID))""")
         self.connection.commit()
+
+class QuestionsTable:
+    def __init__(self):
+        self.connection = sqlite3.connect("storage.db")
+        self.connection.execute("PRAGMA foreign_keys = 1")
+        self.cursor = self.connection.cursor()
+        self.cursor.execute("""CREATE TABLE IF NOT EXISTS questions
+                            (questionID INTEGER PRIMARY KEY AUTOINCREMENT,
+                            subjectID INTEGER,
+                            topicID INTEGER,
+                            question TEXT NOT NULL,
+                            answer TEXT NOT NULL,
+                            question_type TEXT NOT NULL,
+                            FOREIGN KEY (subjectID) REFERENCES subjects (subjectID),
+                            FOREIGN KEY (topicID) REFERENCES topics (topicID))""")
+        self.connection.commit()
+
+    def create_question(self, question_data):
+        print("Creating question")
 
 class UserProgressTable:
     def __init__(self):

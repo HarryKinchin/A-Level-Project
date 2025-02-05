@@ -1,5 +1,5 @@
 import secrets
-from flask import Flask, render_template, request, send_from_directory, make_response, redirect, request, session
+from flask import Flask, render_template, redirect, request, request, session
 from databases import *
 
 app = Flask(__name__)
@@ -30,20 +30,11 @@ def account():
         username, email, userID = session['username'], session['email'], session['userID']
         subjects_oop = SubjectUserTable()
         subjects = subjects_oop.subIDs_get_from_userID(userID)
-        if len(subjects) == 2:
-            sub1 = 'Mathematics'
-            sub2 = 'Computer Science'
-        elif len(subjects) == 1:
-            if subjects[0] == 'Mathematics':
-                sub1 = 'Mathematics'
-                sub2 = ''
-            else:
-                sub1 = ''
-                sub2 = 'Computer Science'
-        else:
-            sub1 = ''
-            sub2 = ''
-        return render_template('account_page.html', name=username, email=email, maths=sub1, compsci=sub2)
+        print(subjects)
+        subs = []
+        for item in subjects:
+            subs.append(item)
+        return render_template('account_page.html', name=username, email=email, subs=subs)
     else:
         return redirect('/login')
     

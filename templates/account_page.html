@@ -19,31 +19,24 @@
 
      <body>
       <h1 style="text-align: center;">{{name}}'s Account</h1>
-      <div id="account_info">
-         <table>
-            <tr>
-               <th style="text-align: left;">Account Details:</th>
-               <th style="text-align: right;">Subjects:</th>
-            </tr>
-            <tr>
-               <td style="text-align: left;">Username: {{name}}</td>
-               <td>
-                  <label id="maths_sub">{{maths}}</label>
-               </td>
-            </tr>
-            <tr>
-               <td style="text-align: left;">Email: {{email}}</td>
-               <td style="text-align: right;">
-                  <label id="comp_sub">{{compsci}}</label>
-               </td>
-            </tr>
-         </table>
 
+      <div id="account_info" class="parent">
+         <div class="child">Account Details:
+            <div class="child">Username: {{name}}</div>
+            <div class="child">Email: {{email}}</div>
+         </div>
+         <div class="child">Subjects:
+            {% for sub in subs %}
+               <div class="child">{{sub}}</div>
+            {% endfor %}
+         </div>
       </div>
+
       <button id="sub_edit" onclick="edit_subjects()">Edit subjects</button>
+
       <form id="edit_form" method="post" action="/account/subject_change" style="display: none;">
-         <input type="checkbox" name="maths_check" id="maths_check">Mathematics<br>
-         <input type="checkbox" name="comp_check" id="comp_check">Computer Science<br>
+         <input type="checkbox" name="maths_check" id="maths_check" {% if maths %}checked{% endif %}>Mathematics<br>
+         <input type="checkbox" name="comp_check" id="comp_check" {% if compsci %}checked{% endif %}>Computer Science<br>
          <input type="submit">
       </form>
      </body>

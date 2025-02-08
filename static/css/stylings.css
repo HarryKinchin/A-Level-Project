@@ -59,6 +59,12 @@ button {
 button:hover {
     transform: scale(1.1) 
 }
+input {
+    border: 2px;
+    padding: 3px;
+    cursor: text;
+    background-color:ghostwhite;
+}
 ul {
     list-style-type: none;
     margin: 0;
@@ -128,6 +134,9 @@ div {
     width: 300px;
     margin: auto;
     border-radius: 20px;
+}
+div div {
+    border: 8px !important;
 }
 .parent {
     flex-direction: row;

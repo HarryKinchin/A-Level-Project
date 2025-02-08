@@ -33,10 +33,22 @@
       </div>
 
       <button id="sub_edit" onclick="edit_subjects()">Edit subjects</button>
+      <button id="info_edit" onclick="edit_info()">Edit account info</button>
 
-      <form id="edit_form" method="post" action="/account/subject_change" style="display: none;">
+      <form id="edit_sub_form" method="post" action="/account/subject_change" style="display: none;">
          <input type="checkbox" name="maths_check" id="maths_check" {% if maths %}checked{% endif %}>Mathematics<br>
          <input type="checkbox" name="comp_check" id="comp_check" {% if compsci %}checked{% endif %}>Computer Science<br>
+         <input type="submit">
+      </form>
+      <form id="edit_info_form" method="post" action="/account/info_change" style="display: none;">
+         <label for="new_uname">New Username:</label>
+         <input type="text" id="new_uname" name="new_uname" placeholder="Username..."><br>
+         <label for="new_email">New Email:</label><br>
+         <input type="text" id="new_email" name="new_email" placeholder="example@domain.com..."><br>
+         <label for="old_password">Old Password:</label>
+         <input type="password" id="old_password" name="old_password" placeholder="0ld Pa55w0rd!" required><br>
+         <label for="new_password">New Passowrd:</label>
+         <input type="password" id="new_password" name="new_password" placeholder="N3w Pa55w0rd!"><br>
          <input type="submit">
       </form>
      </body>

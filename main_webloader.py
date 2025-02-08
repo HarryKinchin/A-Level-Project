@@ -1,6 +1,7 @@
 import secrets
 from flask import Flask, render_template, redirect, request, request, session
 from databases import *
+import re
 
 app = Flask(__name__)
 
@@ -30,7 +31,6 @@ def account():
         username, email, userID = session['username'], session['email'], session['userID']
         subjects_oop = SubjectUserTable()
         subjects = subjects_oop.subIDs_get_from_userID(userID)
-        print(subjects)
         subs = []
         for item in subjects:
             subs.append(item)
@@ -54,23 +54,40 @@ def subject_change():
     subchange_oop.subject_change(userID, subjects_selected)
     return redirect('/account')
 
-@app.route('/login_check', methods=['POST'])
+@app.route('/account/info_change', methods=['POST','GET'])
+def info_change():
+    userID = session['userID']
+    login_oop = UsersTable()
+    new_information = {'new_uname': request.form.get('new_uname'),
+                       'new_email': request.form.get('new_email'),
+                       'new_pass': request.form.get('new_password')}
+    updated_info = login_oop.change_details(userID, request.form.get('old_password'), new_information)
+    if updated_info == True:
+        return redirect('/account')
+    else:
+        return render_template('account_failure.html')
+
+@app.route('/login_check', methods=['POST','GET'])
 def login_check():
     login_oop = UsersTable()
-    if login_oop.login_find(request.form.get('uname'), request.form.get('pword'), request.form.get('email')):
+    if login_oop.login_check(request.form.get('uname'), request.form.get('pword'), request.form.get('email')):
         session['username'], session['email'] = request.form.get('uname'), request.form.get('email')
         session['userID'] = login_oop.userID_get(request.form.get('uname'), request.form.get('pword'), request.form.get('email'))
         return redirect('/account')
     else:
-        return render_template('failure.html')
+        return render_template('login_failure.html')
 
 @app.route('/register', methods=['POST','GET'])
 def registering():
     login_oop = UsersTable()
-    if login_oop.create_login(request.form.get('new_uname'), request.form.get('new_pword'), request.form.get('new_email')):
+    if request.form.get('new_uname') == '' or request.form.get('new_pword') == '' or request.form.get('new_email') == '':
+        return render_template('login_failure.html')
+    elif re.fullmatch(r"[A-Za-z0-9]+", request.form.get('new_uname')) == None or re.fullmatch(r"[a-z]+[A-Z]+[0-9]+[!-\/:-@[-`{-~]+", request.form.get('new_pword')) or re.fullmatch(r"[-A-Za-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-A-Za-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[A-Za-z0-9](?:[-A-Za-z0-9]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[-A-Za-z0-9]*[A-Za-z0-9])?", request.form.get('new_email')):
+        return render_template('login_failure.html')
+    elif login_oop.create_login(request.form.get('new_uname'), request.form.get('new_pword'), request.form.get('new_email')):
         return redirect('/login')
     else:
-        return render_template('failure.html')
+        return render_template('login_failure.html')
     
 @app.route('/subjects')
 def subjects():

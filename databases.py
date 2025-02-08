@@ -24,7 +24,7 @@ class UsersTable:
         else:
             return False
 
-    def login_find(self, user, pword, email):
+    def login_check(self, user, pword, email):
         uname_check = self.cursor.execute("""SELECT username FROM users WHERE username = ?""", (user,))
         uname_check = uname_check.fetchone()
         email_check = self.cursor.execute("""SELECT email FROM users WHERE email = ?""", (email,))
@@ -37,6 +37,22 @@ class UsersTable:
                 return True
             else:
                 return False
+            
+    def change_details(self, userID, old_pass, new_details):
+        print("Changing information", new_details)
+        print("old password", old_pass)
+        try:
+            self.ph.verify(self.cursor.execute("""SELECT password FROM users WHERE userID = ?""", (userID,)).fetchone()[0], old_pass)
+            print('correct old pass')
+            if new_details["new_pass"] != '':
+                new_hashed_pword = PasswordHasher.hash(new_details["new_pass"])
+                print('new hashed pword', new_hashed_pword)
+            else:
+                return False
+            return True
+        except:
+            print('incorrect old pass')
+            return False
 
     def userID_get(self, user, pword, email):
         hashed_pword = self.ph.verify(self.cursor.execute("""SELECT password FROM users WHERE username = ?""", (user,)).fetchone()[0], pword)

@@ -16,11 +16,39 @@ function create_account() {
 }
 
 
-// creating setup for email and password validation
+
+// creating setup for username, email, and password validation
 document.getElementById("reg_submit").disabled = true;
 email_valid = false;
 pword_valid = false;
+uname_valid = false;
 
+// creating regex and input reading for username validation
+var uname_input = document.getElementById('new_uname');
+var uname_regex = /[A-Za-z0-9]+/g;
+
+// username 
+uname_input.onkeyup = function() {
+    var char_bool = false;
+    var length_bool = false;
+
+    if (uname_input.value.match(uname_regex)) {
+        char_bool = true;
+    } else {
+        char_bool = false
+    }
+    if (uname_input.value.length > 2 && uname_input.value.length < 17) {
+        length_bool = true;
+    } else {
+        length_bool = false;
+    }
+    if (char_bool == true && length_bool == true) {
+        uname_valid = true;
+    } else {
+        uname_valid = false;
+    }
+    all_valid()
+}
 // defining of vaiables for password security checking
 var pword_input = document.getElementById('new_pword');
 var pword_length = document.getElementById('len_check');
@@ -29,7 +57,7 @@ var pword_upper = document.getElementById('upper_check');
 var pword_number = document.getElementById('num_check');
 var pword_special = document.getElementById('spec_check');
 
-// defining all regex of characters
+// defining all regex for password validation
 var lower_case_letters = /[a-z]/g;
 var upper_case_letters = /[A-Z]/g;
 var numbers = /[0-9]/g;
@@ -43,7 +71,7 @@ pword_input.onkeyup = function() {
     var num_bool = false;
     var spec_bool = false;
     // length validation
-    if (pword_input.value.length >= 8) {
+    if (pword_input.value.length > 7 && pword_input.value.length < 17) {
         pword_length.classList.remove('invalid');
         pword_length.classList.add('valid');
         length_bool = true;
@@ -97,7 +125,7 @@ pword_input.onkeyup = function() {
     } else {
         pword_valid = false;
     }
-    both_valid()
+    all_valid()
     }
 
 // Setting up variables for email validation (regex for email found using the RFC2822 Email formatting)
@@ -111,12 +139,12 @@ email_input.onkeyup = function() {
     } else {
         email_valid = false;
     }
-    both_valid()
+    all_valid()
 }
 
 // function to check for a valid email and password before submition
-function both_valid() {
-    if (pword_valid == true && email_valid == true) {
+function all_valid() {
+    if (pword_valid == true && email_valid == true && uname_valid == true) {
         document.getElementById("reg_submit").disabled = false;
     } else {
         document.getElementById("reg_submit").disabled = true;

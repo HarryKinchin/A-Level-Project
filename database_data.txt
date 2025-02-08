@@ -1,7 +1,7 @@
 List of data that is in each database by default
 
 subjects table
-cursor.execute("""INSERT INTO subjects(subjectName, examBoard) VALUES("Maths", "OCR MEI B"),
+cursor.executemany("""INSERT INTO subjects(subjectName, examBoard) VALUES("Maths", "OCR MEI B"),
                 ("Computer Science","AQA")""")
 
 topics table

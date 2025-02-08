@@ -34,11 +34,12 @@
             <input type="text" id="new_email" name="new_email" placeholder="example@domain.com..." required><br>
             <input type="submit" id="reg_submit"><br>
          </form><br>
-         <label class="invalid" id="len_check">At least 8 characters long</label><br>
+         <label class="invalid" id="len_check">8-16 characters long (inclusive)</label><br>
          <label class="invalid" id="upper_check">At least 1 uppercase letter</label><br>
          <label class="invalid" id="lower_check">At least 1 lowercase letter</label><br>
          <label class="invalid" id="num_check">At least 1 number</label><br>
          <label class="invalid" id="spec_check">At least 1 special character</label><br>
+         <label>Username must be 3-16 characters (inclusive) and may only contain alphanumerical characters</label>
       </div>
 
       <form id="login_form" method="post" style="display: none;" action="/login_check">

@@ -2,7 +2,7 @@
 <html>
     
     <head>
-        <title>Home</title>
+        <title>Subjects</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
         <link rel="stylesheet" type="text/css" href="/static/css/stylings.css">
@@ -18,9 +18,31 @@
      </header>
 
     <body>
-        <h1 style="text-align: center;">Here are your subjects, {{name}}</h1>
+        <h1 id="welcome_text" style="text-align: center;">Here are your subjects, {{name}}</h1>
+
+        <div id="subject_options">
+            <button>Create Quiz</button>
+            <button onclick="create_question()">Create Question</button>
+        </div>
+
+        <form id="create_question_form" style="display: none;">
+            <label for="subject_choice">Select a subject:</label>
+            <select name="subject_choice" id="subject_choice">
+                {% for sub in subs %}
+                <option value="{{sub}}">{{sub}}</option>
+                {% endfor %}
+            </select><br>
+            <label for="topic_choice">Select a topic:</label>
+            <select name="topic_choice" id="topic_choice">
+                {% for topic in topics %}
+                <option value="{{topic}}">{{topic}}</option>
+                {% endfor %}
+            </select>
+            <br><input type="submit">
+        </form>
     </body>
 
     <footer>
+        <script src="/static/js/subject_funcs.js"> </script>
     </footer>
 </html>

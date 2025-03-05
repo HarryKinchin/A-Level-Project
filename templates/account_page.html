@@ -49,12 +49,21 @@
          <input type="password" id="old_password" name="old_password" placeholder="0ld Pa55w0rd!" required><br>
          <label for="new_password">New Passowrd:</label>
          <input type="password" id="new_password" name="new_password" placeholder="N3w Pa55w0rd!"><br>
-         <input type="submit">
+         <input type="submit" id="submit">
+         <div class="child">
+            <label class="invalid" id="len_check">8-16 characters long (inclusive)</label><br>
+            <label class="invalid" id="upper_check">At least 1 uppercase letter</label><br>
+            <label class="invalid" id="lower_check">At least 1 lowercase letter</label><br>
+            <label class="invalid" id="num_check">At least 1 number</label><br>
+            <label class="invalid" id="spec_check">At least 1 special character</label><br>
+            <label>Username must be 3-16 characters (inclusive) and may only contain alphanumerical characters</label>
+         </div>
       </form>
      </body>
 
      <footer>
-      <script src="/static/js/account_funcs.js"> </script>
+      <script src="/static/js/account_funcs.js"></script>
+      <script src="/static/js/login_funcs.js"></script>
      </footer>
 
 </html>

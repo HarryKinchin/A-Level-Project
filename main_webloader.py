@@ -29,8 +29,10 @@ def logout():
 def account():
     if 'username' in session:
         username, email, userID = session['username'], session['email'], session['userID']
-        subjects_oop = SubjectUserTable()
-        subjects = subjects_oop.subIDs_get_from_userID(userID)
+        subjectsuser_oop = SubjectUserTable()
+        subject_oop = SubjectsTable()
+        subjectIDs = subjectsuser_oop.subIDs_get_from_userID(userID)
+        subjects = subject_oop.subIDs_to_sub(subjectIDs)
         subs = []
         for item in subjects:
             subs.append(item)
@@ -92,8 +94,18 @@ def registering():
 @app.route('/subjects')
 def subjects():
     if 'username' in session:
-        username = session['username']
-        return render_template('subjects.html', name=username)
+        username, userID = session['username'], session['userID']
+        subjectsuser_oop, subject_oop, topics_oop = SubjectUserTable(), SubjectsTable(), TopicsTable()
+        subjectIDs = subjectsuser_oop.subIDs_get_from_userID(userID)
+        subjects = subject_oop.subIDs_to_sub(subjectIDs)
+        topics = topics_oop.get_topics(subjectIDs)
+        subs = []
+        for item in subjects:
+            subs.append(item)
+        topic_list = []
+        for item in topics:
+            topic_list.append(item)
+        return render_template('subjects.html', name=username, subs=subs, topics=topic_list)
     else:
         return redirect('/login')
 

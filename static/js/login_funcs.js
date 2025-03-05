@@ -18,10 +18,10 @@ function create_account() {
 
 
 // creating setup for username, email, and password validation
-document.getElementById("reg_submit").disabled = true;
-email_valid = false;
-pword_valid = false;
-uname_valid = false;
+document.getElementById("submit").disabled = true;
+var email_valid = false;
+var pword_valid = false;
+var uname_valid = false;
 
 // creating regex and input reading for username validation
 var uname_input = document.getElementById('new_uname');
@@ -50,7 +50,7 @@ uname_input.onkeyup = function() {
     all_valid()
 }
 // defining of vaiables for password security checking
-var pword_input = document.getElementById('new_pword');
+var pword_input = document.getElementById('new_password');
 var pword_length = document.getElementById('len_check');
 var pword_lower = document.getElementById('lower_check');
 var pword_upper = document.getElementById('upper_check');
@@ -145,8 +145,8 @@ email_input.onkeyup = function() {
 // function to check for a valid email and password before submition
 function all_valid() {
     if (pword_valid == true && email_valid == true && uname_valid == true) {
-        document.getElementById("reg_submit").disabled = false;
+        document.getElementById("submit").disabled = false;
     } else {
-        document.getElementById("reg_submit").disabled = true;
+        document.getElementById("submit").disabled = true;
     }
 }

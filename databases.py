@@ -39,19 +39,32 @@ class UsersTable:
                 return False
             
     def change_details(self, userID, old_pass, new_details):
-        print("Changing information", new_details)
-        print("old password", old_pass)
         try:
-            self.ph.verify(self.cursor.execute("""SELECT password FROM users WHERE userID = ?""", (userID,)).fetchone()[0], old_pass)
+            self.ph.verify(self.cursor.execute("""SELECT password FROM users WHERE userID=?""", (userID,)).fetchone()[0], old_pass)
             print('correct old pass')
             if new_details["new_pass"] != '':
-                new_hashed_pword = PasswordHasher.hash(new_details["new_pass"])
+                new_hashed_pword = self.ph.hash(new_details["new_pass"])
                 print('new hashed pword', new_hashed_pword)
+                self.cursor.execute(f"""UPDATE users password=? WHERE userID={userID}""", (new_hashed_pword,))
+                self.connection.commit()
             else:
-                return False
+                print('new pword empty')
+            if new_details["new_uname"] != '':
+                print('updating uname')
+                self.cursor.execute(f"""UPDATE users username=? WHERE userID={userID}""", (new_details["new_uname"],))
+                self.connection.commit()
+            else:
+                print('empty uname')
+            if new_details["new_email"] != '':
+                print('updating email')
+                self.cursor.execute(f"""UPDATE users email=? WHERE userID={userID}""", (new_details["new_email"],))
+                self.connection.commit()
+            else:
+                print("empty email")
+            print('account updated')
             return True
         except:
-            print('incorrect old pass')
+            print('account not updated')
             return False
 
     def userID_get(self, user, pword, email):
@@ -104,7 +117,7 @@ class SubjectUserTable:
         if sub_id == []:
             return ''
         else:
-            return SubjectsTable().subIDs_to_sub(sub_id)
+            return sub_id
 
     def subject_change(self, userID, changing_subjectIDs):
         for item in changing_subjectIDs:
@@ -121,6 +134,7 @@ class TopicsTable:
     def __init__(self):
         self.connection = sqlite3.connect("storage.db")
         self.connection.execute("PRAGMA foreign_keys = 1")
+        self.connection.row_factory = lambda cursor, row: row[0]
         self.cursor = self.connection.cursor()
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS topics
                             (topicID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -129,6 +143,18 @@ class TopicsTable:
                             qualification TEXT NOT NULL,
                             FOREIGN KEY (subjectID) REFERENCES subjects (subjectID))""")
         self.connection.commit()
+    
+    def get_topics(self, subID):
+        topics = []
+        for item in subID:
+            self.cursor.execute(f"""SELECT topicName FROM topics WHERE subjectID={item}""")
+            fetched_topics = self.cursor.fetchall()
+            for item in fetched_topics:
+                topics.append(item)
+        if topics == []:
+            return ''
+        else:
+            return topics
 
 class QuestionsTable:
     def __init__(self):

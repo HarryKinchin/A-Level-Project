@@ -19,27 +19,62 @@
 
     <body>
         <h1 id="welcome_text" style="text-align: center;">Here are your subjects, {{name}}</h1>
-
-        <div id="subject_options">
-            <button>Create Quiz</button>
-            <button onclick="create_question()">Create Question</button>
+        {% for sub in subs %}
+        <div id="available_subjects" class="parent">
+            <button id="{{sub}}" onclick="display_subject_options('{{sub}}', '{{name}}')">{{sub}}</button>
+            <div id="{{sub}}_options" class="child" style="display: none;">
+                <button id="{{sub}}_quiz" onclick="create_quiz('{{sub}}')">Create {{sub}} Quiz</button>
+                <button id="{{sub}}_question" onclick="create_question('{{sub}}')">Create {{sub}} Question</button>
+            </div>
         </div>
-
-        <form id="create_question_form" style="display: none;">
-            <label for="subject_choice">Select a subject:</label>
-            <select name="subject_choice" id="subject_choice">
-                {% for sub in subs %}
-                <option value="{{sub}}">{{sub}}</option>
+        {% if sub == 'Mathematics' %}
+        <form id="create_{{sub}}_form" class="parent" style="display: none; width: 400px;" action="/subjects/create_question" method="post">
+            <label for="topic_choice">Select a topic:</label><br>
+            <select name="topic_choice" id="topic_choice" class="child">
+                <option disabled selected>Topic Choice</option>
+                {% for math in maths %}
+                <option value="{{math[1]}}">{{math[1]}}</option>
                 {% endfor %}
             </select><br>
-            <label for="topic_choice">Select a topic:</label>
-            <select name="topic_choice" id="topic_choice">
-                {% for topic in topics %}
-                <option value="{{topic}}">{{topic}}</option>
-                {% endfor %}
-            </select>
+            <label for="question_type">Question type:</label><br>
+            <select name="question_type" id="question_type">
+                <option disabled selected>Question Type</option>
+                <option value="short_answer">Short answer (Few words)</option>
+                <option value="long_answer">Long answer (>=1 sentences)</option>
+                <option value="multiple_choice_one">Multiple choice</option>
+            </select><br>
+            <label for="question_name">Question title:</label><br>
+            <input type="text" id="question_name" name="question_name" required placeholder="Question name..."><br>
+            <label for="question_answer">Question answer:</label><br>
+            <input type="text" id="question_answer" name="question_answer" required placeholder="Question's answer..."><br>
+            <label>Please put *'s around keywords in the answer, ie. "The *CIR*, or *Current Instruction Register*, is a *register* in the CPU's control unit that temporarily *stores* the *instruction* currently being executed or decoded." And avoid using punctuation within keyword *'s</label><br>
             <br><input type="submit">
         </form>
+        {% else %}
+        <form id="create_{{sub}}_form" class="parent" style="display: none; width: 400px;" action="/subjects/create_question" method="post">
+            <label for="topic_choice">Select a topic:</label><br>
+            <select name="topic_choice" id="topic_choice">
+                <option disabled selected>Topic Choice</option>
+                {% for comp in comps %}
+                <option value="{{comp[1]}}">{{comp[1]}}</option>
+                {% endfor %}
+            </select><br>
+            <label for="question_type">Question type:</label><br>
+            <select name="question_type" id="question_type">
+                <option disabled selected>Question Type</option>
+                <option value="short_answer">Short answer (Few words)</option>
+                <option value="long_answer">Long answer (>=1 sentences)</option>
+                <option value="multiple_choice_one">Multiple choice</option>
+            </select><br>
+            <label for="question_name">Question title:</label><br>
+            <input type="text" id="question_name" name="question_name" required placeholder="Question name..."><br>
+            <label for="question_answer">Question answer:</label><br>
+            <input type="text" id="question_answer" name="question_answer" required placeholder="Question's answer..."><br>
+            <label>Please put *'s around keywords in the answer, ie. "The *CIR*, or *Current Instruction Register*, is a *register* in the CPU's control unit that temporarily *stores* the *instruction* currently being executed or decoded." And avoid using punctuation within keyword *'s</label><br>
+            <br><input type="submit">
+        </form>
+        {% endif %}
+        {% endfor %}
     </body>
 
     <footer>

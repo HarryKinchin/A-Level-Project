@@ -1,13 +1,14 @@
 import secrets
-from flask import Flask, render_template, redirect, request, request, session
+from flask import Flask, render_template, redirect, request, session
 from databases import *
+from datetime import timedelta
 import re
 
 app = Flask(__name__)
 
-
 # creating secret key for use in session data
 app.secret_key = secrets.token_bytes(nbytes=32)
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=3)
 
 @app.route('/')
 def main():
@@ -23,14 +24,14 @@ def login():
 
 @app.route('/logout')
 def logout():
+    session.clear()
     return redirect('/login')
 
 @app.route('/account')
 def account():
     if 'username' in session:
         username, email, userID = session['username'], session['email'], session['userID']
-        subjectsuser_oop = SubjectUserTable()
-        subject_oop = SubjectsTable()
+        subjectsuser_oop, subject_oop = SubjectUserTable(), SubjectsTable()
         subjectIDs = subjectsuser_oop.subIDs_get_from_userID(userID)
         subjects = subject_oop.subIDs_to_sub(subjectIDs)
         subs = []
@@ -105,9 +106,27 @@ def subjects():
         topic_list = []
         for item in topics:
             topic_list.append(item)
-        return render_template('subjects.html', name=username, subs=subs, topics=topic_list)
+        maths_topics = []
+        comp_topics = []
+        for item in topic_list:
+            if item[0] == 1:
+                maths_topics.append(item)
+            else:
+                comp_topics.append(item)
+        return render_template('subjects.html', name=username, subs=subs, maths=maths_topics, comps=comp_topics)
     else:
         return redirect('/login')
+
+@app.route('/subjects/create_question', methods=["POST"])
+def create_question():
+    questions_oop = QuestionsTable()
+    question_data = {"topic": request.form.get('topic_choice'),
+                     "type": request.form.get('question_type'),
+                     "name": request.form.get('question_name'),
+                     "answer": request.form.get('question_answer')}
+    print(question_data)
+    questions_oop.create_question(question_data)
+    return redirect('/subjects')
 
 if __name__=='__main__': 
    app.run(debug=True)

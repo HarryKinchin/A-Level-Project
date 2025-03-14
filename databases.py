@@ -1,4 +1,5 @@
 import sqlite3
+import re
 from argon2 import PasswordHasher
 
 class UsersTable:
@@ -134,7 +135,6 @@ class TopicsTable:
     def __init__(self):
         self.connection = sqlite3.connect("storage.db")
         self.connection.execute("PRAGMA foreign_keys = 1")
-        self.connection.row_factory = lambda cursor, row: row[0]
         self.cursor = self.connection.cursor()
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS topics
                             (topicID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -146,15 +146,24 @@ class TopicsTable:
     
     def get_topics(self, subID):
         topics = []
-        for item in subID:
-            self.cursor.execute(f"""SELECT topicName FROM topics WHERE subjectID={item}""")
+        for item1 in subID:
+            self.cursor.execute(f"""SELECT topicName FROM topics WHERE subjectID={item1}""")
             fetched_topics = self.cursor.fetchall()
-            for item in fetched_topics:
-                topics.append(item)
+            for item2 in fetched_topics:
+                topics.append([item1, item2[0]])
         if topics == []:
             return ''
         else:
             return topics
+        
+    def topic_to_topicID(self, topics):
+        topicIDs = []
+        for item1 in topics:
+            self.cursor.execute(f"""SELECT topicID FROM topics WHERE topicName = ?""", (item1,))
+            fetched_topics = self.cursor.fetchall()
+            for item2 in fetched_topics:
+                topicIDs.append(item2)
+        return topicIDs
 
 class QuestionsTable:
     def __init__(self):
@@ -163,17 +172,21 @@ class QuestionsTable:
         self.cursor = self.connection.cursor()
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS questions
                             (questionID INTEGER PRIMARY KEY AUTOINCREMENT,
-                            subjectID INTEGER,
                             topicID INTEGER,
                             question TEXT NOT NULL,
                             answer TEXT NOT NULL,
+                            answer_keywords TEXT,
                             question_type TEXT NOT NULL,
-                            FOREIGN KEY (subjectID) REFERENCES subjects (subjectID),
                             FOREIGN KEY (topicID) REFERENCES topics (topicID))""")
         self.connection.commit()
 
     def create_question(self, question_data):
-        print("Creating question")
+        keywords = re.findall(r"\*[A-Za-z0-9 ]+\*", question_data["answer"])
+        print("keywords", keywords)
+        topicId = TopicsTable.topic_to_topicID(self, [question_data["topic"]])
+        print("topicID", topicId)
+        self.cursor.execute("""INSERT INTO questions(topicID, question, answer, answer_keywords, question_type) VALUES(?, ?, ?, ?, ?)""", (topicId[0], question_data["name"], question_data["answer"], keywords, question_data["type"], ))
+        self.connection.commit()
 
 class UserProgressTable:
     def __init__(self):

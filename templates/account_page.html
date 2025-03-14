@@ -40,11 +40,11 @@
          <input type="checkbox" name="comp_check" id="comp_check" {% if compsci %}checked{% endif %}>Computer Science<br>
          <input type="submit">
       </form>
-      <form id="edit_info_form" method="post" action="/account/info_change" style="display: none;">
+      <form id="edit_info_form" method="post" action="/account/info_change" style="display: none;" class="parent">
          <label for="new_uname">New Username:</label>
          <input type="text" id="new_uname" name="new_uname" placeholder="Username..."><br>
          <label for="new_email">New Email:</label><br>
-         <input type="text" id="new_email" name="new_email" placeholder="example@domain.com..."><br>
+         <input type="email" id="new_email" name="new_email" placeholder="example@domain.com..."><br>
          <label for="old_password">Old Password:</label>
          <input type="password" id="old_password" name="old_password" placeholder="0ld Pa55w0rd!" required><br>
          <label for="new_password">New Passowrd:</label>
@@ -56,7 +56,7 @@
             <label class="invalid" id="lower_check">At least 1 lowercase letter</label><br>
             <label class="invalid" id="num_check">At least 1 number</label><br>
             <label class="invalid" id="spec_check">At least 1 special character</label><br>
-            <label>Username must be 3-16 characters (inclusive) and may only contain alphanumerical characters</label>
+            <label class="child">Username must be 3-16 characters (inclusive) and may only contain alphanumerical characters</label>
          </div>
       </form>
      </body>

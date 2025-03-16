@@ -42,30 +42,25 @@ class UsersTable:
     def change_details(self, userID, old_pass, new_details):
         try:
             self.ph.verify(self.cursor.execute("""SELECT password FROM users WHERE userID=?""", (userID,)).fetchone()[0], old_pass)
-            print('correct old pass')
             if new_details["new_pass"] != '':
                 new_hashed_pword = self.ph.hash(new_details["new_pass"])
-                print('new hashed pword', new_hashed_pword)
                 self.cursor.execute(f"""UPDATE users password=? WHERE userID={userID}""", (new_hashed_pword,))
                 self.connection.commit()
             else:
-                print('new pword empty')
+                pass
             if new_details["new_uname"] != '':
-                print('updating uname')
                 self.cursor.execute(f"""UPDATE users username=? WHERE userID={userID}""", (new_details["new_uname"],))
                 self.connection.commit()
             else:
-                print('empty uname')
+                pass
             if new_details["new_email"] != '':
-                print('updating email')
                 self.cursor.execute(f"""UPDATE users email=? WHERE userID={userID}""", (new_details["new_email"],))
                 self.connection.commit()
             else:
-                print("empty email")
-            print('account updated')
+                pass
             return True
         except:
-            print('account not updated')
+            pass
             return False
 
     def userID_get(self, user, pword, email):
@@ -135,6 +130,7 @@ class TopicsTable:
     def __init__(self):
         self.connection = sqlite3.connect("storage.db")
         self.connection.execute("PRAGMA foreign_keys = 1")
+        self.connection.row_factory = lambda cursor, row: row[0]
         self.cursor = self.connection.cursor()
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS topics
                             (topicID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -150,7 +146,7 @@ class TopicsTable:
             self.cursor.execute(f"""SELECT topicName FROM topics WHERE subjectID={item1}""")
             fetched_topics = self.cursor.fetchall()
             for item2 in fetched_topics:
-                topics.append([item1, item2[0]])
+                topics.append([item1, item2])
         if topics == []:
             return ''
         else:
@@ -169,6 +165,7 @@ class QuestionsTable:
     def __init__(self):
         self.connection = sqlite3.connect("storage.db")
         self.connection.execute("PRAGMA foreign_keys = 1")
+        self.connection.row_factory = lambda cursor, row: row[0]
         self.cursor = self.connection.cursor()
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS questions
                             (questionID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -181,10 +178,9 @@ class QuestionsTable:
         self.connection.commit()
 
     def create_question(self, question_data):
-        keywords = re.findall(r"\*[A-Za-z0-9 ]+\*", question_data["answer"])
-        print("keywords", keywords)
+        keywords_list = re.findall(r"\*[A-Za-z0-9 ]+\*", question_data["answer"])
+        keywords = "-".join(keywords_list)
         topicId = TopicsTable.topic_to_topicID(self, [question_data["topic"]])
-        print("topicID", topicId)
         self.cursor.execute("""INSERT INTO questions(topicID, question, answer, answer_keywords, question_type) VALUES(?, ?, ?, ?, ?)""", (topicId[0], question_data["name"], question_data["answer"], keywords, question_data["type"], ))
         self.connection.commit()
 
@@ -192,6 +188,7 @@ class UserProgressTable:
     def __init__(self):
         self.connection = sqlite3.connect("storage.db")
         self.connection.execute("PRAGMA foreign_keys = 1")
+        self.connection.row_factory = lambda cursor, row: row[0]
         self.cursor = self.connection.cursor()
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS user_progress
                             (topicID INTEGER,

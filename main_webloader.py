@@ -61,9 +61,7 @@ def subject_change():
 def info_change():
     userID = session['userID']
     login_oop = UsersTable()
-    new_information = {'new_uname': request.form.get('new_uname'),
-                       'new_email': request.form.get('new_email'),
-                       'new_pass': request.form.get('new_password')}
+    new_information = {'new_uname': request.form.get('new_uname'), 'new_email': request.form.get('new_email'), 'new_pass': request.form.get('new_password')}
     updated_info = login_oop.change_details(userID, request.form.get('old_password'), new_information)
     if updated_info == True:
         return redirect('/account')
@@ -128,5 +126,5 @@ def create_question():
     questions_oop.create_question(question_data)
     return redirect('/subjects')
 
-if __name__=='__main__': 
+if __name__=='__main__':
    app.run(debug=True)

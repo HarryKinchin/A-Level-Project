@@ -12,6 +12,7 @@
         <ul>
            <li><a href="/">Home</a></li>
            <li><a href="/subjects">Subjects</a></li>
+           <li><a href="/progress">Progress</a></li>
            <li style="float:right"><a href="/account">Account</a></li>
            <li style="float:right"><a href="/logout">Logout</a></li>
         </ul>
@@ -35,30 +36,34 @@
       <button id="sub_edit" onclick="edit_subjects()">Edit subjects</button>
       <button id="info_edit" onclick="edit_info()">Edit account info</button>
 
-      <form id="edit_sub_form" method="post" action="/account/subject_change" style="display: none;">
-         <input type="checkbox" name="maths_check" id="maths_check" {% if maths %}checked{% endif %}>Mathematics<br>
-         <input type="checkbox" name="comp_check" id="comp_check" {% if compsci %}checked{% endif %}>Computer Science<br>
-         <input type="submit">
+      <form id="edit_sub_form" method="post" action="/account/subject_change" style="display: none; width: fit-content;">
+         <input type="checkbox" name="maths_check" id="maths_check" style="justify-content: center;">Mathematics<br>
+         <input type="checkbox" name="comp_check" id="comp_check" style="justify-content: center;">Computer Science<br>
+         <input type="submit"><br><br>
+         <button onclick="window.location.href='/account'">Back</button>
       </form>
-      <form id="edit_info_form" method="post" action="/account/info_change" style="display: none;" class="parent">
-         <label for="new_uname">New Username:</label>
-         <input type="text" id="new_uname" name="new_uname" placeholder="Username..."><br>
-         <label for="new_email">New Email:</label><br>
-         <input type="email" id="new_email" name="new_email" placeholder="example@domain.com..."><br>
-         <label for="old_password">Old Password:</label>
-         <input type="password" id="old_password" name="old_password" placeholder="0ld Pa55w0rd!" required><br>
-         <label for="new_password">New Passowrd:</label>
-         <input type="password" id="new_password" name="new_password" placeholder="N3w Pa55w0rd!"><br>
-         <input type="submit" id="submit">
-         <div class="child">
-            <label class="invalid" id="len_check">8-16 characters long (inclusive)</label><br>
-            <label class="invalid" id="upper_check">At least 1 uppercase letter</label><br>
-            <label class="invalid" id="lower_check">At least 1 lowercase letter</label><br>
-            <label class="invalid" id="num_check">At least 1 number</label><br>
-            <label class="invalid" id="spec_check">At least 1 special character</label><br>
-            <label class="child">Username must be 3-16 characters (inclusive) and may only contain alphanumerical characters</label>
-         </div>
-      </form>
+      <div id="edit_info_div" style="display: none;" class="parent">
+         <form id="edit_info_form" method="post" action="/account/info_change" class="child">
+            <label for="new_uname">New Username:</label>
+            <input type="text" id="new_uname" name="new_uname" placeholder="Username..."><br>
+            <label for="new_email">New Email:</label><br>
+            <input type="email" id="new_email" name="new_email" placeholder="example@domain.com..."><br>
+            <label for="old_password">Old Password:</label>
+            <input type="password" id="old_password" name="old_password" placeholder="0ld Pa55w0rd!" required><br>
+            <label for="new_password">New Passowrd:</label>
+            <input type="password" id="new_password" name="new_password" placeholder="N3w Pa55w0rd!"><br>
+            <input type="submit" id="submit">
+            <div class="child">
+               <label class="invalid" id="len_check">8-16 characters long (inclusive)</label><br>
+               <label class="invalid" id="upper_check">At least 1 uppercase letter</label><br>
+               <label class="invalid" id="lower_check">At least 1 lowercase letter</label><br>
+               <label class="invalid" id="num_check">At least 1 number</label><br>
+               <label class="invalid" id="spec_check">At least 1 special character</label><br>
+               <label class="child">Username must be 3-16 characters (inclusive) and may only contain alphanumerical characters</label>
+            </div>
+         </form><br>
+         <button onclick="window.location.href='/account'">Back</button>
+      </div>
      </body>
 
      <footer>

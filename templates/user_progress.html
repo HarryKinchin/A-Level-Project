@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>Progress</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+        <link rel="stylesheet" type="text/css" href="/static/css/stylings.css">
+    </head>
+    
+    <header>
+        <ul>
+           <li><a href="/">Home</a></li>
+           <li><a href="/subjects">Subjects</a></li>
+           <li><a href="/progress">Progress</a></li>
+           <li style="float:right"><a href="/account">Account</a></li>
+           <li style="float:right"><a href="/logout">Logout</a></li>
+        </ul>
+     </header>
+
+     <body>
+        <div id="main_body" style="display: block; width: max-content;" class="parent">
+            <h1 id="page_text" style="text-align: center;">Here is your progress, {{name}}</h1>
+            <button onclick="edit_progress()">Edit progress</button>
+            <div class="child" style="display: flex; flex-direction: row; justify-content: space-evenly; align-items:  flex-start;">
+                {% for sub in subs %}
+                {% if sub == 'Mathematics' %}
+                <div class="child" id="{{sub}}_table" name="{{sub}}_table" style="align-self: flex-start;">
+                    <h3><b>{{sub}}</b></h3>
+                    {% for math in maths %}
+                        <p id="{{math[0]}}">{{math[0]}}</p>
+                        <p>RAG: {{math[1]}}</p>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="child" id="{{sub}}_table" name="{{sub}}_table" style="align-self: flex-start;">
+                    <h3><b>{{sub}}</b></h3>
+                    {% for comp in comps %}
+                    <p id="{{comp[0]}}">{{comp[0]}}</p>
+                    <p>RAG: {{comp[1]}}</p>
+                    {% endfor %}
+                </div>
+            </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div id="edit_body" style="display: none; width: 35%" class="parent">
+            <h1 style="text-align: center;">Edit your progress</h1>
+            <form id="change_progress_form" name="change_progress_form" class="child" action="/progress/change_progress" method="post">
+                <label for="topic_choice">Select a topic</label><br>
+                <select name="topic_choice" id="topic_choice" required>
+                    <option selected disabled>Topic choice</option>
+                    {% for topic in topics %}
+                    <option value="{{topic[1]}}">{{topic[1]}}</option>
+                    {% endfor %}
+                </select><br>
+                <label for="rag_choice">RAG Choice</label><br>
+                <select name="rag_choice" id="rag_choice" required>
+                    <option selected disabled>RAG Choice</option>
+                    <option value="1">Red</option>
+                    <option value="2">Amber</option>
+                    <option value="3">Green</option>
+                </select><br><br>
+                <input type="submit">
+            </form><br></br>
+            <button onclick="window.location.href='/progress'">Back</button>
+        </div>
+    </body>
+
+     <footer>
+        <script src="/static/js/progress_funcs.js"> </script>
+    </footer>
+
+</html>

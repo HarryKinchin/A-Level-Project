@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>{{topic}} Quiz</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+        <link rel="stylesheet" type="text/css" href="/static/css/stylings.css">
+    </head>
+    
+    <header>
+        <ul>
+           <li><a href="/">Home</a></li>
+           <li><a href="/subjects">Subjects</a></li>
+           <li><a href="/progress">Progress</a></li>
+           <li style="float:right"><a href="/account">Account</a></li>
+           <li style="float:right"><a href="/logout">Logout</a></li>
+        </ul>
+     </header>
+
+     <body>
+        <h1 style="text-align: center;">Quiz on: {{topic}}</h1>
+        <div class="parent" style="width: 40%;">
+            {% for i in length %}
+            {% for j in questions %}
+            <p style="color: #d3d9d4;">Question {{i}} in full: {{j}}</p>
+            <div class="child" id="question_box">
+                <h4 style="text-align: center; color: #d3d9d4;">Question {{i}}: {{j[0]}}</h4>
+                <textarea id="question_{{i}}" name="question_{{i}}" required></textarea>
+            </div>
+            <div class="child" id="answer_box" style="display: none;">
+                <h4 style="text-align: center; color: #d3d9d4;">Answer {{i}}: {{j[0]}}</h4>
+                <div class="child">{{j[1]}}</div>
+            </div>
+            {% endfor %}
+            <input id="check_answers" type="submit" onclick="check_questions()" style="cursor: pointer;" value="Check Answers">
+            {% endfor %}
+            <button id="end_quiz" style="display: none;" onclick="window.location.href='/subjects'">Finish Quiz</button>
+            <button id="new_quiz" onclick="window.location.href='/subjects'">New Quiz</button>
+        </div>
+     </body>
+
+     <footer>
+        <script src="/static/js/quiz_funcs.js"> </script>
+    </footer>
+</html>

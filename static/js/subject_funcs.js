@@ -21,6 +21,7 @@ function display_subject_options(subject, user) {
 function create_quiz(subject) {
     document.getElementById('available_subjects').style.display='none'
     document.getElementById('welcome_text').innerHTML='Create a '+subject+' quiz'
+    document.getElementById('create_'+subject+'_quiz_form').style.display='block'
 }
 function create_question(subject) {
     document.getElementById('welcome_text').innerHTML='Create a '+subject+' question'

@@ -140,6 +140,8 @@ div div {
 }
 .parent {
     flex-direction: row;
+    width: min-content;
+    height: min-content;
     gap: 4px;
     
 }
@@ -169,4 +171,15 @@ input {
     border: 4px solid #2e3944;
     width: 200px;
     border-radius: 25px;
+}
+textarea {
+    margin: auto;
+    cursor: text;
+    color: #d3d9d4;
+    background-color: #124e66;
+    padding: 2px;
+    border: 4px solid #2e3944;
+    width: 200px;
+    border-radius: 25px;
+    resize: vertical;
 }

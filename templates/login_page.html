@@ -12,6 +12,7 @@
       <ul>
          <li><a href="/">Home</a></li>
          <li><a href="/subjects">Subjects</a></li>
+         <li><a href="/progress">Progress</a></li>
          <li style="float:right"><a href="/account">Account</a></li>
          <li style="float:right"><a href="/login">Login</a></li>
       </ul>
@@ -39,7 +40,8 @@
          <label class="invalid" id="lower_check">At least 1 lowercase letter</label><br>
          <label class="invalid" id="num_check">At least 1 number</label><br>
          <label class="invalid" id="spec_check">At least 1 special character</label><br>
-         <label>Username must be 3-16 characters (inclusive) and may only contain alphanumerical characters</label>
+         <label>Username must be 3-16 characters (inclusive) and may only contain alphanumerical characters</label><br>
+         <button onclick="window.location.href='/login'">Back</button>
       </div>
 
       <form id="login_form" method="post" style="display: none;" action="/login_check">
@@ -49,7 +51,8 @@
          <input type="password" id="pword" name="pword" placeholder="Pa55w0rd!..." required><br>
          <label for="email">Email:</label><br>
          <input type="email" id="email" name="email" placeholder="example@domain.com..." required><br>
-         <input type="submit"><br>
+         <input type="submit"><br><br>
+         <button onclick="window.location.href='/login'">Back</button>
       </form>
    </body>
 

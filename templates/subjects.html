@@ -12,6 +12,7 @@
         <ul>
            <li><a href="/">Home</a></li>
            <li><a href="/subjects">Subjects</a></li>
+           <li><a href="/progress">Progress</a></li>
            <li style="float:right"><a href="/account">Account</a></li>
            <li style="float:right"><a href="/logout">Logout</a></li>
         </ul>
@@ -46,21 +47,33 @@
             <label for="question_name">Question title:</label><br>
             <input type="text" id="question_name" name="question_name" required placeholder="Question name..."><br>
             <label for="question_answer">Question answer:</label><br>
-            <input type="text" id="question_answer" name="question_answer" required placeholder="Question's answer..."><br>
+            <textarea id="question_answer" name="question_answer" required placeholder="Question's answer..."></textarea><br>
             <label>Please put *'s around keywords in the answer, ie. "The *CIR*, or *Current Instruction Register*, is a *register* in the CPU's control unit that temporarily *stores* the *instruction* currently being executed or decoded." And avoid using punctuation within keyword *'s</label><br>
             <br><input type="submit">
+        </form>
+        <form id="create_{{sub}}_quiz_form" class="parent" style="display: none; width: 400px;" action="/subjects/create_quiz" method="post">
+            <label for="topic_choice">Select a topic:</label><br>
+            <select name="topic_choice" id="topic_choice" class="child">
+                <option disabled selected>Topic Choice</option>
+                {% for math in maths %}
+                <option value="{{math[1]}}">{{math[1]}}</option>
+                {% endfor %}
+            </select><br>
+            <label for="quiz_length">Number of questions</label><br>
+            <input type="number" id="quiz_length" name="quiz_length" min="1" max="20" step="1" value="1" placeholder="Between 1 and 20" required><br>
+            <input type="submit">
         </form>
         {% else %}
         <form id="create_{{sub}}_form" class="parent" style="display: none; width: 400px;" action="/subjects/create_question" method="post">
             <label for="topic_choice">Select a topic:</label><br>
-            <select name="topic_choice" id="topic_choice">
+            <select name="topic_choice" id="topic_choice" required>
                 <option disabled selected>Topic Choice</option>
                 {% for comp in comps %}
                 <option value="{{comp[1]}}">{{comp[1]}}</option>
                 {% endfor %}
             </select><br>
             <label for="question_type">Question type:</label><br>
-            <select name="question_type" id="question_type">
+            <select name="question_type" id="question_type" required>
                 <option disabled selected>Question Type</option>
                 <option value="short_answer">Short answer (Few words)</option>
                 <option value="long_answer">Long answer (>=1 sentences)</option>
@@ -69,9 +82,21 @@
             <label for="question_name">Question title:</label><br>
             <input type="text" id="question_name" name="question_name" required placeholder="Question name..."><br>
             <label for="question_answer">Question answer:</label><br>
-            <input type="text" id="question_answer" name="question_answer" required placeholder="Question's answer..."><br>
+            <textarea id="question_answer" name="question_answer" required placeholder="Question's answer..."></textarea><br>
             <label>Please put *'s around keywords in the answer, ie. "The *CIR*, or *Current Instruction Register*, is a *register* in the CPU's control unit that temporarily *stores* the *instruction* currently being executed or decoded." And avoid using punctuation within keyword *'s</label><br>
             <br><input type="submit">
+        </form>
+        <form id="create_{{sub}}_quiz_form" class="parent" style="display: none; width: 400px;" action="/subjects/create_quiz" method="post">
+            <label for="topic_choice">Select a topic:</label><br>
+            <select name="topic_choice" id="topic_choice" required>
+                <option disabled selected>Topic Choice</option>
+                {% for comp in comps %}
+                <option value="{{comp[1]}}">{{comp[1]}}</option>
+                {% endfor %}
+            </select><br>
+            <label for="quiz_length">Number of questions</label><br>
+            <input type="number" id="quiz_length" name="quiz_length" min="1" max="20" step="1" value="1" placeholder="Between 1 and 20" required><br>
+            <input type="submit">
         </form>
         {% endif %}
         {% endfor %}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>Subjects</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+        <link rel="stylesheet" type="text/css" href="/static/css/stylings.css">
+    </head>
+    
+    <header>
+        <ul>
+           <li><a href="/">Home</a></li>
+           <li><a href="/subjects">Subjects</a></li>
+           <li><a href="/progress">Progress</a></li>
+           <li style="float:right"><a href="/account">Account</a></li>
+           <li style="float:right"><a href="/logout">Logout</a></li>
+        </ul>
+     </header>
+
+     <body>
+        {% if type == 'quiz' %}
+            <h1 style="margin: auto; padding: 10px; text-align: center;">Unfortunately, there are either not enough or no questions for the topic "{{topic}}" in the database</h1>
+            <h1 style="text-align: center;">Please try again</h1>
+            <button onclick="window.location.href='/subjects'">Try again</button>
+        {% elif type == 'login' %}
+            <h1 style="text-align: center;">Login has failed</h1>
+            <h1 style="text-align: center;">Please try again</h1>
+            <button onclick="window.location.href='/login'">Try again</button>
+        {% elif type == 'registering' %}
+            <h1 style="text-align: center;">Registering has failed</h1>
+            <h1 style="text-align: center;">Please try again</h1>
+            <button onclick="window.location.href='/login'">Try again</button>
+        {% elif type == 'account' %}
+            <h1 style="text-align: center;">Account info updater has failed</h1>
+            <h1 style="text-align: center;">Please try again</h1>
+            <button onclick="window.location.href='/account'">Try again</button>
+        {% else %}
+            <h1 style="text-align: center;">Unknown error occured</h1>
+            <h1 style="text-align: center;">Please try again</h1>
+            <button onclick="window.location.href='/'">Try again</button>
+        {% endif %}
+     </body>
+
+     <footer>
+        <script src="/static/js/quiz_funcs.js"> </script>
+    </footer>
+</html>

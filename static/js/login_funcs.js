@@ -126,7 +126,7 @@ pword_input.onkeyup = function() {
         pword_valid = false;
     }
     all_valid()
-    }
+}
 
 // Setting up variables for email validation (regex for email found using the RFC2822 Email formatting)
 var email_input = document.getElementById('new_email');

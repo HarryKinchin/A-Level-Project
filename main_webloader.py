@@ -152,7 +152,11 @@ def create_quiz():
         for i in range(1, int(quiz_data["quiz_length"])+1):
             length.append(i)
         if question_data[0] == True:
-            return render_template('quiz.html', topic=quiz_data['topic'], length=length , questions=question_data[1])
+            list_of_tuples = question_data[1]
+            list_of_lists = []
+            for item in list_of_tuples:
+                list_of_lists.append(list(item))
+            return render_template('quiz.html', topic=quiz_data['topic'], length=length , questions=list_of_lists)
         else:
             return render_template("failures.html", type="quiz", topic=quiz_data['topic'])
     else:

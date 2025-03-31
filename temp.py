@@ -3,8 +3,8 @@ TASKS LEFT TO DO:
 1.
 2.
 3.
-4. adding functionality to quiz page (incl. submission, checking)
-5. making quiz page look nice
+4.
+5.
 6. add comments
 7. finish documentation
 """
@@ -27,5 +27,6 @@ PROGRESS PAGE
 SUBJECT PAGE
     1. Add question of each type (question type and subject)
     2. Create quiz of each type (each subject)
-    3. Test quiz (answers and submission)
+QUIZ PAGE
+    1. Test quiz (answers and submission)
 """

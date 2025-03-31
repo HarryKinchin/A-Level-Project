@@ -20,6 +20,10 @@
 
      <body>
         <h1 style="text-align: center;">Quiz on: {{topic}}</h1>
+        <!--
+        this div contains the questions and answer boxes for the quiz
+        a for loop is used to display each question
+        -->
         <div class="parent" style="width: 40%;">
             {% for i in length %}
             <div class="child" name="questions" id="question_{{i}}">
@@ -35,6 +39,7 @@
             </div>
             {% endfor %}
             {% for i in length %}
+            <!-- this div contains the answers, user's answers, and the button to check the answer to a question -->
             <div class="child" name="answers" id="answer_{{i}}" style="display: none;">
                 <h4 style="text-align: center; color: #d3d9d4;">Answer to {{questions[i-1][0]}}:<br> {{questions[i-1][1]}}</h4>
                 <p><b>Your answer was:</b></p>

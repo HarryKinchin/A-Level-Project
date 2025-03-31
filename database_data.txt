@@ -63,6 +63,3 @@ cursor.execute("""INSERT INTO topics(subjectID, topicName, qualification) VALUES
                 (2,"4.11 Big data","A2"),
                 (2,"4.12 Fundamentals of functional programming","A2"),
                 (2,"4.13 Systematic approach to problem solving","A2")""")
-
-questions table
-sidenote: all questions were add using the on-site question creator, but the ones listed here are the ones added and used for testing purposes

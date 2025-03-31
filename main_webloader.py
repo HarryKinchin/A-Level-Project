@@ -1,53 +1,57 @@
-import secrets
 from flask import Flask, render_template, redirect, request, session
-from databases import *
 from datetime import timedelta
+from databases import *
+import secrets
 import re
 
+# creating the inital setup for the website (encryption and cookie expiry length)
 app = Flask(__name__)
-
-# creating secret key for use in session data
 app.secret_key = secrets.token_bytes(nbytes=32)
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=3)
 
+# landing page of website
 @app.route('/', methods=['POST', 'GET'])
 def main():
-    if 'username' in session:
+    if 'username' in session:   # this inital if statement (present in most app.routes) makes sure the user is logged in, if not then they will be prompted to login
         username = session['username']
-        return render_template('main_page.html', name=username)
+        return render_template('main_page.html', name=username) # the use of the name value here will pass in the username from the cookie to be used on the html page, similar variables are used through each page to be used in the website
     else:
         return redirect('/login')
 
+# login page
 @app.route('/login', methods=['POST', 'GET'])       
 def login(): 
     return render_template('login_page.html')
 
+# this page will clear the cookie and send the user back to the login page
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect('/login')
 
+# the account page displays all users personal details, with options to change when needed
 @app.route('/account', methods=['POST', 'GET'])
 def account():
     if 'username' in session:
         username, email, userID = session['username'], session['email'], session['userID']
-        subjectsuser_oop, subject_oop = SubjectUserTable(), SubjectsTable()
+        subjectsuser_oop, subject_oop = SubjectUserTable(), SubjectsTable() # this is how the code and use subroutines in the 'databases.py' file, and are used as and when needed throughout
         subjectIDs = subjectsuser_oop.subIDs_get_from_userID(userID)
         subjects = subject_oop.subIDs_to_sub(subjectIDs)
         subs = []
-        for item in subjects:
+        for item in subjects:   # this is one of many methods used to convert the tuple (returned from sqlite select statements) to arrays, html does not work well with tuples and thus I made ways to change from tuples to arrays
             subs.append(item)
         return render_template('account_page.html', name=username, email=email, subs=subs)
     else:
         return redirect('/login')
-    
+
+# this is the way in which a user changes their subject choices    
 @app.route('/account/subject_change', methods=['POST','GET'])
 def subject_change():
     if 'username' in session:
         userID = session['userID']
         subchange_oop = SubjectUserTable()
         progress_oop = UserProgressTable()
-        subjects_selected = []
+        subjects_selected = []  # the following if statements separate the subjects so that they can be used to add/remove the default progress of the user
         if request.form.get('maths_check'):
             subjects_selected.append('1,true')
         else:
@@ -62,25 +66,29 @@ def subject_change():
             if split_item[1] == 'false':
                 progress_oop.del_progress(userID, split_item[0])
             else:
-                progress_oop.add_progress(userID, split_item[0])
+                progress_oop.add_progress(userID, split_item[0])    # this is knowingly a closed-minded way of coding, as it does not allow for expansion of other subjects
         return redirect('/account')
     else:
         return redirect('/login')
     
+# this is where the user can change their account information
 @app.route('/account/info_change', methods=['POST','GET'])
 def info_change():
     if 'username' in session:
         userID = session['userID']
-        login_oop = UsersTable()
-        new_information = {'new_uname': request.form.get('new_uname'), 'new_email': request.form.get('new_email'), 'new_pass': request.form.get('new_password')}
+        login_oop = UsersTable()    # this uses a dictionary to get each piece of the data from the form
+        new_information = {'new_uname': request.form.get('new_uname'), 
+                           'new_email': request.form.get('new_email'),
+                           'new_pass': request.form.get('new_password')}
         updated_info = login_oop.change_details(userID, request.form.get('old_password'), new_information)
         if updated_info == True:
             return redirect('/account')
-        else:
+        else:   # the failure page is a default page that changes based on the 'type' to suit where it got redirected from
             return render_template("failures.html", type="account") 
     else:
         return redirect('/login')
 
+# this routine checks that the login details given match what is in the datbase, more depth given in the comments of the subroutine called
 @app.route('/login_check', methods=['POST','GET'])
 def login_check():
     login_oop = UsersTable()
@@ -91,18 +99,20 @@ def login_check():
     else:
         return render_template("failures.html", type="login") 
 
+# this is similar to the routine above, but instead checking that the details match all requirements
 @app.route('/register', methods=['POST','GET'])
 def registering():
     login_oop = UsersTable()
     if request.form.get('new_uname') == '' or request.form.get('new_pword') == '' or request.form.get('new_email') == '':
-        return render_template('login_failure.html')
+        return render_template("failures.html", type="registering")
     elif re.fullmatch(r"[A-Za-z0-9]+", request.form.get('new_uname')) == None or re.fullmatch(r"[a-z]+[A-Z]+[0-9]+[!-\/:-@[-`{-~]+", request.form.get('new_pword')) or re.fullmatch(r"[-A-Za-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-A-Za-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[A-Za-z0-9](?:[-A-Za-z0-9]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[-A-Za-z0-9]*[A-Za-z0-9])?", request.form.get('new_email')):
-        return render_template('login_failure.html')
+        return render_template("failures.html", type="registering")
     elif login_oop.create_login(request.form.get('new_uname'), request.form.get('new_pword'), request.form.get('new_email')):
         return redirect('/login')
     else:
         return render_template("failures.html", type="registering") 
-    
+
+# this page displays the users' subjects, from which they can create questions of quizzes
 @app.route('/subjects', methods=['POST', 'GET'])
 def subjects():
     if 'username' in session:
@@ -128,6 +138,7 @@ def subjects():
     else:
         return redirect('/login')
 
+# creating a question utilises a dictionary to parse in the data to be added to the database
 @app.route('/subjects/create_question', methods=['POST', 'GET'])
 def create_question():
     if 'username' in session:
@@ -141,6 +152,7 @@ def create_question():
     else:
         return redirect('/login')
 
+# creating a quiz requires all the data from a question to be used very specifically in the html code
 @app.route('/subjects/create_quiz', methods=['POST', 'GET'])
 def create_quiz():
     if 'username' in session:
@@ -162,6 +174,7 @@ def create_quiz():
     else:
         return redirect('/login')
     
+# the progress page displays a users progress within a given topic, which they can choose and change as they deem fit
 @app.route('/progress', methods=['POST', 'GET'])
 def progress():
     if 'username' in session:
@@ -187,6 +200,7 @@ def progress():
     else:
         return redirect('/login')
 
+# this allows users to change their progress of a given topic, on a scale of Red, Amber, Green
 @app.route('/progress/change_progress', methods=['POST', 'GET'])
 def change_progress():
     if 'username' in session:

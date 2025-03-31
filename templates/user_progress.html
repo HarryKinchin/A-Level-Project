@@ -19,6 +19,7 @@
      </header>
 
      <body>
+        <!-- this div contains each subject, followed by each topic and its associated RAG value -->
         <div id="main_body" style="display: block; width: max-content;" class="parent">
             <h1 id="page_text" style="text-align: center;">Here is your progress, {{name}}</h1>
             <button onclick="edit_progress()">Edit progress</button>
@@ -45,7 +46,7 @@
                 {% endfor %}
             </div>
         </div>
-
+        <!-- this form allows the user to change the RAG value of a given topic -->
         <div id="edit_body" style="display: none; width: 35%" class="parent">
             <h1 style="text-align: center;">Edit your progress</h1>
             <form id="change_progress_form" name="change_progress_form" class="child" action="/progress/change_progress" method="post">

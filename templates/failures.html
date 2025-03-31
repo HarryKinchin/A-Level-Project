@@ -19,6 +19,7 @@
      </header>
 
      <body>
+        <!-- these if statements take the value of 'type' from the redirect and displays one of 5 error messages depending on what has caused the user to be redirected here -->
         {% if type == 'quiz' %}
             <h1 style="margin: auto; padding: 10px; text-align: center;">Unfortunately, there are either not enough or no questions for the topic "{{topic}}" in the database</h1>
             <h1 style="text-align: center;">Please try again</h1>

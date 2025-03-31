@@ -20,6 +20,7 @@
 
     <body>
         <h1 id="welcome_text" style="text-align: center;">Here are your subjects, {{name}}</h1>
+        <!-- this initial for loop creates a div for each subject, containing the button to create a quiz and a question -->
         {% for sub in subs %}
         <div id="available_subjects" class="parent">
             <button id="{{sub}}" onclick="display_subject_options('{{sub}}', '{{name}}')">{{sub}}</button>
@@ -29,6 +30,7 @@
             </div>
         </div>
         {% if sub == 'Mathematics' %}
+        <!-- the create question form allows the user to create a question for a topic of their choosing, allowing for each part of the question to be set -->
         <form id="create_{{sub}}_form" class="parent" style="display: none; width: 400px;" action="/subjects/create_question" method="post">
             <label for="topic_choice">Select a topic:</label><br>
             <select name="topic_choice" id="topic_choice" class="child">
@@ -42,15 +44,19 @@
                 <option disabled selected>Question Type</option>
                 <option value="short_answer">Short answer (Few words)</option>
                 <option value="long_answer">Long answer (>=1 sentences)</option>
-                <option value="multiple_choice_one">Multiple choice</option>
+                <option value="multiple_choice_one">Multiple choice (unsupported)</option>
             </select><br>
             <label for="question_name">Question title:</label><br>
             <input type="text" id="question_name" name="question_name" required placeholder="Question name..."><br>
             <label for="question_answer">Question answer:</label><br>
             <textarea id="question_answer" name="question_answer" required placeholder="Question's answer..."></textarea><br>
+            <!-- this was my way of the user setting required keywords for a question to be correct,
+             it was the solution that made the most sense to be used as it allows for the user to say what is important for the answer to be correct
+             and makes it so that your answer isn't compared to the whole of the answer in the database, just the keywords -->
             <label>Please put *'s around keywords in the answer, ie. "The *CIR*, or *Current Instruction Register*, is a *register* in the CPU's control unit that temporarily *stores* the *instruction* currently being executed or decoded." And avoid using punctuation within keyword *'s</label><br>
             <br><input type="submit">
         </form>
+        <!-- to create a quiz, the user needs to set the topic and the amount of questions, making it highly customisable, the questions are randomised so no 2 quizzes are the same-->
         <form id="create_{{sub}}_quiz_form" class="parent" style="display: none; width: 400px;" action="/subjects/create_quiz" method="post">
             <label for="topic_choice">Select a topic:</label><br>
             <select name="topic_choice" id="topic_choice" class="child">
@@ -64,6 +70,7 @@
             <input type="submit">
         </form>
         {% else %}
+        <!-- this section has the same things as above, but for computer science -->
         <form id="create_{{sub}}_form" class="parent" style="display: none; width: 400px;" action="/subjects/create_question" method="post">
             <label for="topic_choice">Select a topic:</label><br>
             <select name="topic_choice" id="topic_choice" required>

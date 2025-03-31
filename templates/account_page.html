@@ -20,7 +20,7 @@
 
      <body>
       <h1 style="text-align: center;">{{name}}'s Account</h1>
-
+      <!-- this is the info panel for the user's information -->
       <div id="account_info" class="parent">
          <div class="child">Account Details:
             <div class="child">Username: {{name}}</div>
@@ -35,13 +35,14 @@
 
       <button id="sub_edit" onclick="edit_subjects()">Edit subjects</button>
       <button id="info_edit" onclick="edit_info()">Edit account info</button>
-
+      <!-- the form from which the user can edit which subjects they are doing -->
       <form id="edit_sub_form" method="post" action="/account/subject_change" style="display: none; width: fit-content;">
          <input type="checkbox" name="maths_check" id="maths_check" style="justify-content: center;">Mathematics<br>
          <input type="checkbox" name="comp_check" id="comp_check" style="justify-content: center;">Computer Science<br>
          <input type="submit"><br><br>
          <button onclick="window.location.href='/account'">Back</button>
       </form>
+      <!-- the form where a user can edit their personal details -->
       <div id="edit_info_div" style="display: none;" class="parent">
          <form id="edit_info_form" method="post" action="/account/info_change" class="child">
             <label for="new_uname">New Username:</label>
@@ -54,6 +55,7 @@
             <input type="password" id="new_password" name="new_password" placeholder="N3w Pa55w0rd!"><br>
             <input type="submit" id="submit">
             <div class="child">
+               <!-- this, as well as the checking, is the same as the login page -->
                <label class="invalid" id="len_check">8-16 characters long (inclusive)</label><br>
                <label class="invalid" id="upper_check">At least 1 uppercase letter</label><br>
                <label class="invalid" id="lower_check">At least 1 lowercase letter</label><br>

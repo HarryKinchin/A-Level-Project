@@ -1,5 +1,6 @@
 // functions for the subject page
 
+// this function 
 function display_subject_options(subject, user) {
     if (document.getElementById(subject+'_options').style.display=='none') {
         document.getElementById(subject+'_options').style.display='block'
@@ -18,11 +19,15 @@ function display_subject_options(subject, user) {
         }
     }
 }
+
+// this function displays the form to create a quiz for a given subject
 function create_quiz(subject) {
     document.getElementById('available_subjects').style.display='none'
     document.getElementById('welcome_text').innerHTML='Create a '+subject+' quiz'
     document.getElementById('create_'+subject+'_quiz_form').style.display='block'
 }
+
+// this function displays the form to create a question for a given topic
 function create_question(subject) {
     document.getElementById('welcome_text').innerHTML='Create a '+subject+' question'
     document.getElementById('create_'+subject+'_form').style.display='block'

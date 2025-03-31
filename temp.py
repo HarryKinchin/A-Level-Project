@@ -1,14 +1,4 @@
 """
-TASKS LEFT TO DO:
-1.
-2.
-3.
-4.
-5.
-6. add comments
-7. finish documentation
-"""
-"""
 TEST LIST:
 LOGIN PAGE
     1. Register account

@@ -2,7 +2,7 @@
 TEST LIST:
 LOGIN PAGE
     1. Register account
-    2. Back buttons
+    2. Back buttons (once tested here, will work for all pages)
     3. Login account
 ACCOUNT PAGE
     1. Edit individual details

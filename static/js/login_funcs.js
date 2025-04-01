@@ -15,8 +15,6 @@ function create_account() {
     document.getElementById('choice_text').innerHTML='Create an account'
 }
 
-
-
 // creating setup for username, email, and password validation
 document.getElementById("submit").disabled = true;
 var email_valid = false;

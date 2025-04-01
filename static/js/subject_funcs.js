@@ -1,6 +1,6 @@
 // functions for the subject page
 
-// this function 
+// this function displays the options for a subject (create quiz or question) and hides the other subjects
 function display_subject_options(subject, user) {
     if (document.getElementById(subject+'_options').style.display=='none') {
         document.getElementById(subject+'_options').style.display='block'

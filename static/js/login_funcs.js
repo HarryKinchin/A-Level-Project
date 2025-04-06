@@ -140,7 +140,7 @@ email_input.onkeyup = function() {
     all_valid()
 }
 
-// function to check for a valid email and password before submition
+// function to check for a valid email and password before submission
 function all_valid() {
     if (pword_valid == true && email_valid == true && uname_valid == true) {
         document.getElementById("submit").disabled = false;

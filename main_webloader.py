@@ -103,11 +103,11 @@ def login_check():
 @app.route('/register', methods=['POST','GET'])
 def registering():
     login_oop = UsersTable()
-    if request.form.get('new_uname') == '' or request.form.get('new_pword') == '' or request.form.get('new_email') == '':
+    if request.form.get('new_uname') == '' or request.form.get('new_password') == '' or request.form.get('new_email') == '':
         return render_template("failures.html", type="registering")
-    elif re.fullmatch(r"[A-Za-z0-9]+", request.form.get('new_uname')) == None or re.fullmatch(r"[a-z]+[A-Z]+[0-9]+[!-\/:-@[-`{-~]+", request.form.get('new_pword')) or re.fullmatch(r"[-A-Za-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-A-Za-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[A-Za-z0-9](?:[-A-Za-z0-9]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[-A-Za-z0-9]*[A-Za-z0-9])?", request.form.get('new_email')):
+    elif re.fullmatch(r"[A-Za-z0-9]+", request.form.get('new_uname')) == None or re.fullmatch(r"[a-z]+[A-Z]+[0-9]+[!-\/:-@[-`{-~]+", request.form.get('new_password')) == None or re.fullmatch(r"[-A-Za-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-A-Za-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[A-Za-z0-9](?:[-A-Za-z0-9]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[-A-Za-z0-9]*[A-Za-z0-9])?", request.form.get('new_email')) == None:
         return render_template("failures.html", type="registering")
-    elif login_oop.create_login(request.form.get('new_uname'), request.form.get('new_pword'), request.form.get('new_email')):
+    elif login_oop.create_login(request.form.get('new_uname'), request.form.get('new_password'), request.form.get('new_email')):
         return redirect('/login')
     else:
         return render_template("failures.html", type="registering") 

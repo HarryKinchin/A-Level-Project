@@ -19,9 +19,12 @@ class UsersTable:
 
     # this subroutine checks if a username and email already exists, and then adds it if it doesn't
     def create_login(self, user, pword, email):
+        print(user, pword, email)
         exists = self.cursor.execute("""SELECT username, email FROM users WHERE username = ?""", (user,))
+        print(exists)
         if exists.fetchone() is None:
-            hashed_pword = self.ph.hash(pword)
+            hashed_pword = self.ph.hash(f"{pword}")
+            print(hashed_pword)
             self.cursor.execute("""INSERT INTO users(username, password, email) VALUES(?, ?, ?)""", (user, hashed_pword, email,))
             self.connection.commit()
             return True
@@ -38,9 +41,10 @@ class UsersTable:
             return False
         else:
             pword_check = self.cursor.execute("""SELECT password FROM users WHERE username = ?""", (user,))
-            if self.ph.verify(pword_check.fetchone()[0], pword):
+            try:
+                self.ph.verify(pword_check.fetchone()[0], pword)
                 return True
-            else:
+            except:
                 return False
         
     # changing the users' details is performed here, by first verifying that the old password entered is correct, then updating what is needed

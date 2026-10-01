@@ -1,6 +1,6 @@
 # A-Level-Project: A revision quizzer website
 
-Full documentation for this project is in the pdf within the project, in the file [`NEA Documentation.pdf`](NEA Documentation.pdf)
+Full documentation for this project is in the pdf within the project, in the file [`NEA_Documentation.pdf`](NEA_Documentation.pdf)
 
 ## 🚀 Overview
 
